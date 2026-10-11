@@ -4,6 +4,15 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>NEXUM RH: ponto pelo rosto, folha calculada e portal do colaborador</title>
+<script>
+/* Registro de erros (Sentry): cole aqui o DSN do projeto (sentry.io > Settings > Projects > Client Keys) para ativar. Vazio = desligado. */
+var SENTRY_DSN = '';
+(function () { if (!SENTRY_DSN || location.protocol !== 'https:') return; var s = document.createElement('script'); s.src = 'https://browser.sentry-cdn.com/8.33.1/bundle.min.js'; s.crossOrigin = 'anonymous';
+  s.onload = function () { try { Sentry.init({ dsn: SENTRY_DSN, environment: 'producao', release: 'nexum@' + (document.title || 'app'), sendDefaultPii: false, tracesSampleRate: 0,
+    beforeSend: function (ev) { if (ev.user) ev.user = {}; if (ev.request) { delete ev.request.cookies; delete ev.request.headers; } return ev; } }); Sentry.setTag('sistema', location.pathname.split('/').pop() || 'index'); } catch (e) { } };
+  document.head.appendChild(s); })();
+</script>
+
 <meta name="description" content="Sistema de RH para comércio e redes de lojas: ponto por reconhecimento facial, folha automática, holerites assinados pelo celular, rescisão e portal do colaborador. Teste grátis por 14 dias.">
 <meta name="theme-color" content="#061A4B">
 <meta property="og:title" content="NEXUM RH: o RH da sua loja funcionando sozinho">
@@ -215,7 +224,8 @@ dialog.ck::backdrop{background:rgba(4,18,58,.62);backdrop-filter:blur(2px)}
 .cp thead th{font-family:var(--fd);font-size:17px;font-weight:700;background:#FAFBFD}.cp thead th.cp-nx{background:var(--navy);color:#fff;border-radius:0}
 .cp tbody th{font-weight:600;width:38%}.cp td.cp-nx{background:#F2F6FF}.cp-s{display:inline-flex;width:28px;height:28px;border-radius:50%;background:#E3F6EE;color:var(--ok);align-items:center;justify-content:center;font-weight:800}
 .cp-n{color:#A7AEC4;font-weight:700;font-size:20px}.cp-p{font-size:14.5px;color:var(--ink2)}.cp td.cp-nx .cp-p{color:var(--blue);font-weight:600}
-@media(max-width:760px){.cp th:first-child{position:sticky;left:0;background:#fff;z-index:1}.cp thead th:first-child{background:#FAFBFD}}</style>
+@media(max-width:760px){.cp th:first-child{position:sticky;left:0;background:#fff;z-index:1}.cp thead th:first-child{background:#FAFBFD}}.pq a.pq-l{border:1px solid var(--line);border-radius:999px;padding:7px 14px;font-weight:600;font-size:15px;background:#fff;color:var(--blue-d);text-decoration:none}.pq a.pq-l:hover{border-color:var(--blue)}
+</style>
 </head>
 <body id="topo">
 <header class="topo"><div class="w"><a class="lg esc" href="#topo" aria-label="NEXUM RH, início"><svg class="lg-n" width="44" height="40" viewBox="20 20 580 520" aria-hidden="true"><defs>
@@ -237,7 +247,7 @@ dialog.ck::backdrop{background:rgba(4,18,58,.62);backdrop-filter:blur(2px)}
   <div class="aviso av1"><span class="ic" style="background:#22C08A"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" width="16" height="16" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></span><div><b>Ponto registrado</b><span>Ana Souza, 08:00</span></div></div>
   <div class="aviso av2"><span class="ic" style="background:#1F5FE8"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/></svg></span><div><b>Holerite assinado</b><span>Bruno Martins, com foto</span></div></div>
   <div class="aviso av3"><span class="ic" style="background:#7C3AED"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 10h18"/></svg></span><div><b>Folha de outubro fechada</b><span>12 funcionários, 3 lojas</span></div></div></div></div></section>
-<section class="pq" aria-label="Para quem é"><div class="w"><b>Feito para</b><span>Lojas de celular</span><span>Varejo e moda</span><span>Farmácias</span><span>Restaurantes e lanchonetes</span><span>Supermercados</span><span>Redes com várias lojas</span></div></section>
+<section class="pq" aria-label="Para quem é"><div class="w"><b>Feito para</b><a class="pq-l" href="segmento-lojas-de-celular.html">Lojas de celular</a><span>Varejo e moda</span><a class="pq-l" href="segmento-farmacias.html">Farmácias</a><a class="pq-l" href="segmento-restaurantes.html">Restaurantes e lanchonetes</a><a class="pq-l" href="segmento-supermercados.html">Supermercados</a><span>Redes com várias lojas</span></div></section>
 <section class="faixa"><div class="w"><div class="tit"><h2>Menos planilha, menos mensagem e menos risco trabalhista.</h2><p>O que muda no dia a dia de quem cuida do RH de uma loja.</p></div>
  <div class="ad"><div class="an"><h3>Como costuma ser</h3><ul><li>Folha de ponto em papel ou planilha</li><li>Calcular hora extra e DSR na mão</li><li>Imprimir holerite e cobrar assinatura</li><li>Atestado chegando por foto no WhatsApp</li><li>Rescisão calculada no susto, perto do prazo</li></ul></div>
  <div class="dp"><h3>Com o NEXUM</h3><ul><li>Ponto pelo rosto, com localização da loja</li><li>Horas extras e DSR calculados direto do ponto</li><li>Holerite assinado com foto, pelo celular</li><li>Atestado enviado pelo portal e abonado no ponto</li><li>TRCT completo, com o prazo de 10 dias controlado</li></ul></div></div></div></section>
@@ -257,11 +267,15 @@ dialog.ck::backdrop{background:rgba(4,18,58,.62);backdrop-filter:blur(2px)}
  <aside class="preco-rs"><h3>Recrutamento e Seleção</h3><div class="v">R$ 289<small>/mês</small></div><p class="dia">menos de R$ 10 por dia</p><p class="nt">Contratado à parte, para usar com qualquer plano.</p><span class="sem">Sem período de teste grátis</span>
   <ul><li>Vagas e candidatos ilimitados</li><li>Equipe de recrutadores e gerentes</li><li>Portal do candidato no celular</li><li>Relatórios do funil e da origem dos candidatos</li></ul>
   <button class="btn" data-comprar="recrutamento">Comprar agora</button><a class="tg" id="b-rs" href="#contato">Tirar dúvidas no WhatsApp</a></aside></div></section>
+<section class="faixa cz" id="selecao"><div class="w"><div class="tit"><span class="tag">Serviço da NEXUM</span><h2>Sem tempo para selecionar? A NEXUM faz por você.</h2><p>Recrutamento e seleção terceirizados: a nossa equipe divulga a vaga, faz a triagem e as entrevistas e apresenta só quem tem o perfil da sua loja. Sem mensalidade: você paga por resultado.</p></div>
+ <div class="st-g"><div class="st-p"><span>por candidato apresentado</span><b>R$ 200</b><small>Triado e entrevistado pela NEXUM, com parecer e currículo.</small></div><div class="st-p dest"><span>por candidato contratado</span><b>R$ 400</b><small>Cobrado só quando você contrata a pessoa indicada.</small></div>
+  <ol class="st-l"><li><b>Você conta a vaga</b><span>Cargo, loja, horário e salário. O nome da loja aparece no anúncio, com foto da vaga.</span></li><li><b>A NEXUM divulga e seleciona</b><span>Anúncio, triagem, testes e entrevista por vídeo.</span></li><li><b>Você recebe os melhores</b><span>Só os candidatos com perfil, com parecer de cada um.</span></li><li><b>O aprovado vai à loja</b><span>O endereço da loja só é passado no fim, para o candidato falar com o gerente.</span></li></ol></div>
+ <div class="st-a"><button class="btn" data-st="1">Contratar a seleção terceirizada</button><span>Sem fidelidade e sem taxa de adesão. Funciona com ou sem o NEXUM RH.</span></div></div></section>
 <section class="faixa"><div class="w"><div class="tit"><h2>Quanto tempo o seu RH ganha por mês?</h2><p>Uma estimativa rápida. Ajuste para a sua realidade.</p></div>
  <div class="calc"><div class="ent"><div class="lin"><label for="cl-f">Funcionários: <span class="vv" id="cl-fv">12</span></label><input type="range" id="cl-f" min="1" max="150" value="12"></div>
   <div class="lin"><label for="cl-s">Como é feito hoje</label><select id="cl-s"><option value="40">Ponto em papel e cálculos em planilha</option><option value="25">Relógio de ponto e planilha para a folha</option><option value="15">Outro sistema, com muita coisa manual</option></select></div>
   <div class="lin" style="margin:0"><label for="cl-c">Custo de 1 hora de quem cuida do RH (R$)</label><input type="number" id="cl-c" min="10" max="500" value="30" inputmode="decimal"></div></div>
- <div class="sai"><p style="margin:0">Economia estimada por mês</p><div class="big" id="cl-r">R$ 0</div><p id="cl-h">0 horas de trabalho a menos</p>
+ <div class="sai"><p style="margin:0">Economia estimada por mês</p><div class="big" id="cl-r">R$ 0</div><p id="cl-h">0 horas de trabalho a menos</p><p id="cl-l" style="margin:6px 0 0;color:#BFD3FF"></p>
   <div class="lin2"><span>Plano indicado</span><b id="cl-p">Profissional · R$ 299/mês</b></div><button class="btn br" data-comprar="" id="cl-b">Comprar agora</button>
   <small>Estimativa: o tempo por funcionário por mês gasto com ponto, horas extras, holerites, assinaturas e documentos, reduzido em 70% com o NEXUM. Não é garantia de resultado.</small></div></div>
  <div class="gar">
@@ -301,11 +315,11 @@ dialog.ck::backdrop{background:rgba(4,18,58,.62);backdrop-filter:blur(2px)}
     <path d="M404 124 578 30v330H404z" fill="url(#nfd)"/>
     <path d="M404 230h174v130H404z" fill="url(#nfs)"/>
     <path d="M36 168c8-32 42-56 78-82 26-19 50-44 74-54 22-9 44-4 60 12l316 290c16 15 16 32 2 46l-96 90c-16 15-38 15-54 0L104 166c-18-16-48-20-68 2z" fill="url(#nff)"/>
-    <path d="M60 140c30-34 80-74 118-100" stroke="#8FD0FF" stroke-opacity=".55" stroke-width="5" stroke-linecap="round" fill="none"/></svg><span class="lg-t"><span class="lg-l1"><span class="lg-w">NE<span class="lg-x">X</span>UM</span><i class="lg-bar"></i><span class="lg-rh">RH</span></span></span></a><nav aria-label="Links"><a data-app="entrar" href="https://rh.nexumdp.com.br/">Entrar no sistema</a><a href="contrato.html">Contrato</a><a href="termos.html">Termos de uso</a><a href="privacidade.html">Política de privacidade</a></nav><span>© 2026 NEXUM RH</span></div></footer>
+    <path d="M60 140c30-34 80-74 118-100" stroke="#8FD0FF" stroke-opacity=".55" stroke-width="5" stroke-linecap="round" fill="none"/></svg><span class="lg-t"><span class="lg-l1"><span class="lg-w">NE<span class="lg-x">X</span>UM</span><i class="lg-bar"></i><span class="lg-rh">RH</span></span></span></a><nav aria-label="Links"><a data-app="entrar" href="https://rh.nexumdp.com.br/">Entrar no sistema</a><a data-app="contador" href="https://rh.nexumdp.com.br/?contador=1">Sou contador: seja parceiro</a><a href="blog.html">Guia trabalhista</a><a href="contrato.html">Contrato</a><a href="termos.html">Termos de uso</a><a href="privacidade.html">Política de privacidade</a></nav><span>© 2026 NEXUM RH</span></div></footer>
 <script>
 /* Endereço do sistema. Se mudar o domínio, troque só aqui. */
 var APP = 'https://rh.nexumdp.com.br/';
-[].forEach.call(document.querySelectorAll('[data-app]'), function (a) { var k = a.getAttribute('data-app'); a.href = APP + (k === 'criar' ? '#criar' : k === 'demo' ? '#demo' : ''); });
+[].forEach.call(document.querySelectorAll('[data-app]'), function (a) { var k = a.getAttribute('data-app'); a.href = APP + (k === 'criar' ? '#criar' : k === 'demo' ? '#demo' : k === 'contador' ? '?contador=1' : ''); });
 /* WhatsApp de vendas: vem do Painel do Dono (Dados da plataforma). Sem ele, o botão de contratar leva ao contato no fim da página. */
 window.aoCarregarDados = function (d) { var dp = String(d.depoimentos || '').split('\n').map(function (l) { return l.split('|').map(function (x) { return x.trim(); }); }).filter(function (x) { return x[0] && x[0].length > 8; }).slice(0, 6);
   if (dp.length) { var es = function (t) { return String(t || '').replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }; document.getElementById('depos').innerHTML = dp.map(function (x) { return '<figure class="depo"><blockquote>“' + es(x[0]) + '”</blockquote><figcaption>' + es(x[1] || '') + (x[2] ? '<span>' + es(x[2]) + '</span>' : '') + '</figcaption></figure>'; }).join(''); document.getElementById('depo').hidden = false; }
@@ -350,9 +364,12 @@ var PAGAMENTO = {
   cartao: { essencial: '', profissional: '', empresa: '', recrutamento: '' },
   link: { essencial: { 1: '', 3: '', 6: '', 12: '' }, profissional: { 1: '', 3: '', 6: '', 12: '' }, empresa: { 1: '', 3: '', 6: '', 12: '' }, recrutamento: { 1: '', 3: '', 6: '', 12: '' } }
 };
-var CONTRATO_VERSAO = '1.1 (08/10/2026)';
+var CONTRATO_VERSAO = '1.2 (11/10/2026)';
 var PLANOS = { essencial: ['Essencial', 99, 'até 10 funcionários'], profissional: ['Profissional', 299, 'até 50 funcionários'], empresa: ['Empresa', 499, 'funcionários ilimitados'], recrutamento: ['Só Recrutamento e Seleção', 0, 'sem o NEXUM RH'] };
 var RS = 289, CK = { passo: 1, plano: 'profissional', rs: false, meses: 1, forma: 'cartao', d: {}, ind: (new URLSearchParams(location.search).get('ind') || '').toLowerCase().replace(/[^a-z0-9]/g, '').slice(0, 30) };
+/* programa de revenda: o link do contador parceiro (?rev=NX123456) fica guardado por 60 dias neste navegador */
+CK.rev = (function () { var q = (new URLSearchParams(location.search).get('rev') || '').toUpperCase().replace(/[^A-Z0-9]/g, ''), ok = function (c) { return /^NX[A-Z0-9]{6}$/.test(c); };
+  try { if (ok(q)) { localStorage.setItem('nx_rev', JSON.stringify({ c: q, ate: Date.now() + 60 * 864e5 })); return q; } var g = JSON.parse(localStorage.getItem('nx_rev') || 'null'); if (g && ok(g.c) && g.ate > Date.now()) return g.c; } catch (e) { } return ok(q) ? q : ''; })();
 function brl(v) { return 'R$ ' + v.toFixed(2).replace('.', ',').replace(/\B(?=(\d{3})+(?!\d),)/g, '.'); }
 function so(v) { return String(v || '').replace(/\D/g, ''); }
 function cpfOk(c) { c = so(c); if (c.length !== 11 || /^(\d)\1+$/.test(c)) return false; for (var t = 9; t < 11; t++) { var s = 0; for (var i = 0; i < t; i++) s += +c[i] * (t + 1 - i); if ((s * 10 % 11) % 10 !== +c[t]) return false; } return true; }
@@ -380,7 +397,7 @@ function desenhar() {
       + '<div class="full"><label for="c-nome">' + (v.tp === 'cpf' ? 'Nome completo' : 'Razão social') + '</label><input id="c-nome" autocomplete="organization" value="' + (v.nome || '') + '"></div>'
       + '<div class="full"><label for="c-resp">Responsável pela contratação</label><input id="c-resp" autocomplete="name" value="' + (v.resp || '') + '"></div>'
       + '<div><label for="c-mail">E-mail</label><input id="c-mail" type="email" autocomplete="email" value="' + (v.mail || '') + '"></div><div><label for="c-wa">WhatsApp</label><input id="c-wa" type="tel" inputmode="tel" autocomplete="tel" placeholder="(45) 99999-9999" value="' + (v.wa || '') + '"></div>'
-      + '<div class="full"><label for="c-cid">Cidade/UF</label><input id="c-cid" autocomplete="address-level2" placeholder="Foz do Iguaçu/PR" value="' + (v.cid || '') + '"></div><div class="full"><label for="c-ind">Código de indicação (opcional)</label><input id="c-ind" autocomplete="off" value="' + (CK.ind || '') + '" placeholder="Se outra empresa indicou o NEXUM"></div></div><p class="hint" style="color:var(--ink2);font-size:14px;margin:12px 0 0">Se você já usa o teste grátis, informe o mesmo e-mail da conta: o acesso pago continua nela.</p>';
+      + '<div class="full"><label for="c-cid">Cidade/UF</label><input id="c-cid" autocomplete="address-level2" placeholder="Foz do Iguaçu/PR" value="' + (v.cid || '') + '"></div><div class="full"><label for="c-ind">Código de indicação (opcional)</label><input id="c-ind" autocomplete="off" value="' + (CK.ind || CK.rev || '') + '" placeholder="De outra empresa ou do seu contador parceiro"></div></div>' + (CK.plano !== 'recrutamento' ? '<div class="cmp" style="margin-top:14px"><div class="full" style="font-weight:700;color:var(--navy)">Acesso ao sistema</div><div><label for="c-s1">Crie uma senha</label><input id="c-s1" type="password" autocomplete="new-password" placeholder="Mínimo de 6 caracteres" value="' + (CK.senha || '') + '"></div><div><label for="c-s2">Repita a senha</label><input id="c-s2" type="password" autocomplete="new-password" value="' + (CK.senha2 || '') + '"></div></div>' : '') + '<p class="hint" style="color:var(--ink2);font-size:14px;margin:12px 0 0">' + (CK.plano !== 'recrutamento' ? 'O seu login no NEXUM RH é criado agora com este e-mail e esta senha. Se você já tem conta (pelo teste grátis), use o mesmo e-mail: o plano pago entra nela.' : 'Se você já usa o teste grátis, informe o mesmo e-mail da conta: o acesso pago continua nela.') + '</p>';
     b.querySelector('#c-tp').onchange = function () { ler(); CK.d.tp = this.value; desenhar(); };
   } else if (CK.passo === 3) {
     b.innerHTML = '<div class="res"><b>Principais condições do contrato</b><ul><li>Pagamento antecipado, por cartão (cobrança mensal automática) ou link de pagamento (PIX, boleto ou cartão).</li><li><b>Sem pagamento após o vencimento:</b> até o 5º dia o sistema funciona com aviso; do 6º ao 15º dia fica somente para consulta e o ponto pelo portal é suspenso; a partir do 16º dia o sistema e o portal ficam bloqueados, com acesso apenas para pagar e baixar os dados.</li><li>Após 90 dias de bloqueio, o contrato é encerrado e os dados podem ser excluídos, com aviso de 15 dias.</li>' + (itens().some(function (x) { return x[0] === 'recrutamento'; }) ? '<li>O Recrutamento e Seleção não tem teste grátis.</li>' : '') + '<li>Cancelamento a qualquer momento, sem multa. Arrependimento em até 7 dias com devolução integral.</li><li>Reajuste anual pelo IPCA, com aviso de 30 dias.</li></ul></div>'
@@ -396,28 +413,55 @@ function desenhar() {
       + '<div class="res" style="margin-top:14px"><b>Resumo</b><ul>' + itens().map(function (x) { return '<li>' + x[1] + ': ' + brl(x[2]) + '/mês</li>'; }).join('') + '<li>Período: ' + (CK.meses === 1 ? 'mensal' : CK.meses + ' meses') + '</li><li>Contratante: ' + CK.d.nome + ' (' + CK.d.doc + ')</li></ul></div><div class="tot"><span>Total a pagar agora</span><b>' + brl(total()) + '</b></div>';
     [].forEach.call(b.querySelectorAll('[name=fp]'), function (r) { r.onchange = function () { CK.forma = r.value; }; });
   } else {
-    b.innerHTML = '<div class="okk"><p style="margin:0;color:var(--ink2)">Número do pedido</p><div class="n">' + CK.num + '</div><p style="margin:6px 0 16px">O aceite do contrato foi registrado. ' + (CK.links.length ? 'Conclua o pagamento abaixo.' : 'Envie o pedido pelo WhatsApp: vamos responder com o link de pagamento.') + '</p>'
+    b.innerHTML = '<div class="okk"><p style="margin:0;color:var(--ink2)">Número do pedido</p><div class="n">' + CK.num + '</div>' + telaAcesso() + '<p style="margin:6px 0 16px">O aceite do contrato foi registrado. ' + (CK.links.length ? 'Conclua o pagamento abaixo.' : 'Envie o pedido pelo WhatsApp: vamos responder com o link de pagamento.') + '</p>'
       + CK.links.map(function (x) { return '<a class="btn" style="width:100%;margin-top:8px" href="' + x[1] + '" target="_blank" rel="noopener">Pagar ' + x[0] + '</a>'; }).join('')
-      + '<a class="btn ' + (CK.links.length ? 'cl' : '') + '" style="width:100%;margin-top:8px" id="ck-wa" href="' + CK.wa + '" target="_blank" rel="noopener">' + (CK.links.length ? 'Enviar comprovante pelo WhatsApp' : 'Enviar pedido pelo WhatsApp') + '</a><p style="color:var(--ink2);font-size:14.5px;margin:16px 0 0">Depois do pagamento, o acesso é liberado em até 1 dia útil' + (itens().some(function (x) { return x[0] !== 'recrutamento'; }) ? ' na conta do e-mail ' + CK.d.mail : '') + '.</p></div>';
+      + '<a class="btn ' + (CK.links.length ? 'cl' : '') + '" style="width:100%;margin-top:8px" id="ck-wa" href="' + CK.wa + '" target="_blank" rel="noopener">' + (CK.links.length ? 'Enviar comprovante pelo WhatsApp' : 'Enviar pedido pelo WhatsApp') + '</a><p style="color:var(--ink2);font-size:14.5px;margin:16px 0 0">' + (CK.acesso && CK.acesso.tid ? 'Assim que o pagamento for confirmado, o plano ' + PLANOS[CK.plano][0] + ' passa a valer pelo período contratado, sem você precisar fazer nada.' : 'Depois do pagamento, o acesso é liberado em até 1 dia útil' + (itens().some(function (x) { return x[0] !== 'recrutamento'; }) ? ' na conta do e-mail ' + CK.d.mail : '') + '.') + '</p></div>';
   }
   f.innerHTML = CK.passo === 5 ? '<span></span><button class="btn" data-ck="fim">Fechar</button>' : (CK.passo > 1 ? '<button class="btn cl" data-ck="volta">Voltar</button>' : '<span></span>') + '<div class="erro" role="alert"></div><button class="btn" data-ck="segue">' + (CK.passo === 4 ? 'Ir para o pagamento' : 'Continuar') + '</button>';
   f.querySelector('.erro') && (f.querySelector('.erro').style.cssText = 'flex:1;text-align:center;margin:0;align-self:center');
 }
-function ler() { var g = function (id) { var e = document.getElementById(id); return e ? e.value.trim() : ''; }; CK.d = { tp: g('c-tp') || CK.d.tp || 'cnpj', doc: g('c-doc'), nome: g('c-nome'), resp: g('c-resp'), mail: g('c-mail'), wa: g('c-wa'), cid: g('c-cid') }; if (document.getElementById('c-ind')) CK.ind = g('c-ind').toLowerCase().replace(/[^a-z0-9]/g, '').slice(0, 30); }
+function ler() { var g = function (id) { var e = document.getElementById(id); return e ? e.value.trim() : ''; }; CK.d = { tp: g('c-tp') || CK.d.tp || 'cnpj', doc: g('c-doc'), nome: g('c-nome'), resp: g('c-resp'), mail: g('c-mail'), wa: g('c-wa'), cid: g('c-cid') }; if (document.getElementById('c-ind')) { CK.ind = g('c-ind').toLowerCase().replace(/[^a-z0-9]/g, '').slice(0, 30); if (/^nx[a-z0-9]{6}$/.test(CK.ind)) { CK.rev = CK.ind.toUpperCase(); CK.ind = ''; } } if (document.getElementById('c-s1')) { CK.senha = document.getElementById('c-s1').value; CK.senha2 = document.getElementById('c-s2').value; } }
 function erro(t) { var e = document.querySelector('#ck .erro'); if (e) e.textContent = t; return false; }
 function valida() {
-  if (CK.passo === 2) { ler(); var v = CK.d; if (v.tp === 'cpf' ? !cpfOk(v.doc) : !cnpjOk(v.doc)) return erro((v.tp === 'cpf' ? 'CPF' : 'CNPJ') + ' inválido.'); if (v.nome.length < 3) return erro('Informe ' + (v.tp === 'cpf' ? 'o nome completo.' : 'a razão social.')); if (v.resp.split(' ').length < 2) return erro('Informe o nome completo do responsável.'); if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v.mail)) return erro('Informe um e-mail válido.'); if (so(v.wa).length < 10) return erro('Informe o WhatsApp com DDD.'); if (v.cid.length < 3) return erro('Informe a cidade.'); }
+  if (CK.passo === 2) { ler(); var v = CK.d; if (v.tp === 'cpf' ? !cpfOk(v.doc) : !cnpjOk(v.doc)) return erro((v.tp === 'cpf' ? 'CPF' : 'CNPJ') + ' inválido.'); if (v.nome.length < 3) return erro('Informe ' + (v.tp === 'cpf' ? 'o nome completo.' : 'a razão social.')); if (v.resp.split(' ').length < 2) return erro('Informe o nome completo do responsável.'); if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(v.mail)) return erro('Informe um e-mail válido.'); if (so(v.wa).length < 10) return erro('Informe o WhatsApp com DDD.'); if (v.cid.length < 3) return erro('Informe a cidade.'); if (CK.plano !== 'recrutamento') { if ((CK.senha || '').length < 6) return erro('Crie uma senha de pelo menos 6 caracteres.'); if (CK.senha !== CK.senha2) return erro('As senhas não conferem.'); } }
   if (CK.passo === 3 && (!CK.ac1 || !CK.ac2)) return erro('Marque as duas confirmações para continuar.');
   return true;
 }
+function telaAcesso() {
+  var a = CK.acesso; if (!a) return '';
+  if (a.tid) return '<div style="text-align:left;border:1px solid #BFE5D2;background:#EFFAF4;border-radius:14px;padding:14px 16px;margin:14px 0 6px"><b style="color:#0F7A4F;display:block;margin-bottom:4px">Seu acesso ao NEXUM RH já está pronto</b><span style="font-size:14.5px;color:var(--ink2)">Entre com o e-mail <b>' + CK.d.mail.toLowerCase() + '</b> e a senha que você criou. Código da empresa (para o Portal do Colaborador): <b>' + a.tid + '</b>.</span><a class="btn" style="width:100%;margin-top:10px" href="https://rh.nexumdp.com.br/" target="_blank" rel="noopener">Entrar no sistema agora</a></div>';
+  if (a.existe) return '<div style="text-align:left;border:1px solid var(--line);border-radius:14px;padding:12px 16px;margin:14px 0 6px;font-size:14.5px;color:var(--ink2)">O e-mail <b>' + CK.d.mail.toLowerCase() + '</b> já tem conta no NEXUM RH. Entre com a senha que você já usa: o plano contratado é aplicado nessa conta após o pagamento.</div>';
+  return '<div style="text-align:left;border:1px solid #F3C98B;background:#FFF7EA;border-radius:14px;padding:12px 16px;margin:14px 0 6px;font-size:14.5px">Não conseguimos criar o seu login agora. Fique tranquilo: o pedido foi registrado e liberamos o acesso pelo WhatsApp.</div>';
+}
 function waVendas() { return window.WHATS_VENDAS || WHATS_PADRAO; }
+
+/* Cria o acesso ao NEXUM RH no momento da compra: usuário (e-mail e senha) + empresa, como o "Criar conta grátis" do sistema.
+   A empresa começa liberada; ao confirmar o pagamento no Painel do Dono, a licença passa para o plano e o período contratados. */
+async function criarAcessoRH() {
+  var KEY = 'AIzaSyDdcLJdO2qnmiGsR1EsKFu-uJfs4FRNvA4', DOC = 'projects/nexum-30044/databases/(default)/documents', v = CK.d;
+  try {
+    var r = await fetch('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=' + KEY, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ email: v.mail.toLowerCase(), password: CK.senha, returnSecureToken: true }) });
+    var j = await r.json();
+    if (!r.ok) { var m = (j.error && j.error.message) || ''; return /EMAIL_EXISTS/.test(m) ? { existe: true } : { erro: m || 'falha' }; }
+    var base = v.nome.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '').slice(0, 10) || 'empresa', tid = base + Math.random().toString(36).slice(2, 6);
+    var h = new Date(); h.setHours(0, 0, 0, 0); var exp = new Date(h.getTime() + 14 * 864e5), dia = h.getFullYear() + '-' + String(h.getMonth() + 1).padStart(2, '0') + '-' + String(h.getDate()).padStart(2, '0');
+    var S = function (x) { return { stringValue: String(x) }; };
+    var corpo = { writes: [
+      { update: { name: DOC + '/tenants/' + tid, fields: { nome: S(v.nome), cnpj: S(v.doc), telefone: S(so(v.wa)), email: S(v.mail.toLowerCase()), cidade: S(v.cid), aceiteTermos: { mapValue: { fields: { versao: S(CONTRATO_VERSAO), em: S(new Date().toISOString()) } } }, plano: S(CK.plano), trial: { booleanValue: true }, criadoEm: S(dia), ownerUid: S(j.localId), expiraTs: { timestampValue: exp.toISOString() }, origem: S('site'), pedido: S(CK.num), ...(CK.rev ? { revenda: S(CK.rev) } : {}) } }, currentDocument: { exists: false } },
+      { update: { name: DOC + '/users/' + j.localId, fields: { tenantId: S(tid), tipo: S('rh'), role: S('admin'), nome: S(v.resp), email: S(v.mail.toLowerCase()), ativo: { booleanValue: true } } }, currentDocument: { exists: false } }] };
+    var c = await fetch('https://firestore.googleapis.com/v1/' + DOC + ':commit', { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + j.idToken }, body: JSON.stringify(corpo) });
+    if (!c.ok) return { erro: 'empresa: ' + c.status };
+    return { tid: tid };
+  } catch (e) { return { erro: e.message || 'sem conexão' }; }
+}
 async function finalizar() {
   CK.num = 'NX-' + Date.now().toString(36).toUpperCase().slice(-6); var agora = new Date().toISOString(), v = CK.d, it = itens();
   CK.links = it.map(function (x) { var u = CK.forma === 'cartao' ? PAGAMENTO.cartao[x[0]] : (PAGAMENTO.link[x[0]] || {})[CK.meses]; return u ? [x[1], u] : null; }).filter(Boolean);
-  if (CK.links.length !== it.length) CK.links = [];
-  var txt = 'Olá! Pedido ' + CK.num + ' pelo site.\n' + it.map(function (x) { return '• ' + x[1] + ': ' + brl(x[2]) + '/mês'; }).join('\n') + '\nPeríodo: ' + (CK.meses === 1 ? 'mensal' : CK.meses + ' meses') + '\nForma: ' + (CK.forma === 'cartao' ? 'cartão de crédito (mensal automática)' : 'link de pagamento') + '\nTotal: ' + brl(total()) + '\n\n' + (v.tp === 'cpf' ? 'CPF: ' : 'CNPJ: ') + v.doc + '\n' + v.nome + '\nResponsável: ' + v.resp + '\nE-mail: ' + v.mail + '\nWhatsApp: ' + v.wa + '\nCidade: ' + v.cid + (CK.ind ? '\nIndicado por: ' + CK.ind : '') + '\n\nAceitei o Contrato de Prestação de Serviços (versão ' + CONTRATO_VERSAO + ') e estou ciente da regra de bloqueio por falta de pagamento.';
+  if (CK.links.length !== it.length || CK.cupom) CK.links = [];
+  var txt = 'Olá! Pedido ' + CK.num + ' pelo site.\n' + it.map(function (x) { return '• ' + x[1] + ': ' + brl(x[2]) + '/mês'; }).join('\n') + '\nPeríodo: ' + (CK.meses === 1 ? 'mensal' : CK.meses + ' meses') + '\nForma: ' + (CK.forma === 'cartao' ? 'cartão de crédito (mensal automática)' : 'link de pagamento') + (CK.cupom ? '\nCupom: ' + CK.cupom.cod + ' (− ' + brl(window.__cupom.desconto()) + ')' : '') + '\nTotal: ' + brl(total()) + '\n\n' + (v.tp === 'cpf' ? 'CPF: ' : 'CNPJ: ') + v.doc + '\n' + v.nome + '\nResponsável: ' + v.resp + '\nE-mail: ' + v.mail + '\nWhatsApp: ' + v.wa + '\nCidade: ' + v.cid + (CK.ind ? '\nIndicado por: ' + CK.ind : '') + '\n\nAceitei o Contrato de Prestação de Serviços (versão ' + CONTRATO_VERSAO + ') e estou ciente da regra de bloqueio por falta de pagamento.';
   CK.wa = 'https://wa.me/55' + so(waVendas()) + '?text=' + encodeURIComponent(txt);
-  var F = function (s) { return { stringValue: String(s).slice(0, 300) }; }, corpo = { fields: { numero: F(CK.num), plano: F(CK.plano), recrutamento: { booleanValue: it.some(function (x) { return x[0] === 'recrutamento'; }) }, meses: { integerValue: String(CK.meses) }, forma: F(CK.forma), total: { doubleValue: total() }, tipoDoc: F(v.tp), doc: F(so(v.doc)), nome: F(v.nome), responsavel: F(v.resp), email: F(v.mail.toLowerCase()), whatsapp: F(so(v.wa)), cidade: F(v.cid), contratoVersao: F(CONTRATO_VERSAO), indicacao: F(CK.ind || ''), aceiteContrato: { booleanValue: true }, aceiteBloqueio: { booleanValue: true }, aceiteEm: F(agora), navegador: F(navigator.userAgent), status: F('aguardando_pagamento') } };
+  var F = function (s) { return { stringValue: String(s).slice(0, 300) }; }, corpo = { fields: { numero: F(CK.num), plano: F(CK.plano), recrutamento: { booleanValue: it.some(function (x) { return x[0] === 'recrutamento'; }) }, meses: { integerValue: String(CK.meses) }, forma: F(CK.forma), total: { doubleValue: total() }, tipoDoc: F(v.tp), doc: F(so(v.doc)), nome: F(v.nome), responsavel: F(v.resp), email: F(v.mail.toLowerCase()), whatsapp: F(so(v.wa)), cidade: F(v.cid), contratoVersao: F(CONTRATO_VERSAO), indicacao: F(CK.ind || ''), ...(CK.rev ? { revenda: F(CK.rev) } : {}), ...(CK.cupom ? { cupom: F(CK.cupom.cod), desconto: { doubleValue: window.__cupom.desconto() } } : {}), aceiteContrato: { booleanValue: true }, aceiteBloqueio: { booleanValue: true }, aceiteEm: F(agora), navegador: F(navigator.userAgent), status: F('aguardando_pagamento') } };
+  CK.acesso = itens().some(function (x) { return x[0] !== 'recrutamento'; }) ? await criarAcessoRH() : null; if (CK.acesso && CK.acesso.tid) corpo.fields.tenantId = F(CK.acesso.tid);
   try { await fetch('https://firestore.googleapis.com/v1/projects/nexum-30044/databases/(default)/documents/contratacoes?key=AIzaSyDdcLJdO2qnmiGsR1EsKFu-uJfs4FRNvA4', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(corpo) }); } catch (e) { }
   CK.passo = 5; desenhar(); if (CK.links.length === 1) window.open(CK.links[0][1], '_blank', 'noopener');
 }
@@ -438,11 +482,250 @@ document.addEventListener('click', function (e) {
   function calc() { var n = +f.value, min = +s.value, h = n * min * 0.7 / 60, cu = Math.max(0, +c.value || 0), pl = n <= 10 ? ['Essencial', 99, 'essencial'] : n <= 50 ? ['Profissional', 299, 'profissional'] : ['Empresa', 499, 'empresa'];
     document.getElementById('cl-fv').textContent = n; document.getElementById('cl-r').textContent = 'R$ ' + Math.round(h * cu).toLocaleString('pt-BR');
     document.getElementById('cl-h').textContent = (h < 10 ? h.toFixed(1).replace('.', ',') : Math.round(h)) + ' horas de trabalho a menos';
-    document.getElementById('cl-p').textContent = pl[0] + ' · R$ ' + pl[1] + '/mês'; document.getElementById('cl-b').setAttribute('data-comprar', pl[2]); }
+    document.getElementById('cl-p').textContent = pl[0] + ' · R$ ' + pl[1] + '/mês'; var liq = Math.round(h * cu - pl[1]), dias = h * cu > 0 ? Math.max(1, Math.ceil(pl[1] / (h * cu / 30))) : 0; document.getElementById('cl-l').textContent = liq > 0 ? 'Já descontando o plano, sobram R$ ' + liq.toLocaleString('pt-BR') + ' por mês. O plano se paga em ' + dias + ' dia' + (dias > 1 ? 's' : '') + '.' : 'Com poucos funcionários, o maior ganho é a segurança: ponto válido, prazos e documentos assinados.'; document.getElementById('cl-b').setAttribute('data-comprar', pl[2]); }
   [f, s, c].forEach(function (x) { x.addEventListener('input', calc); }); calc(); })();
 /* barra fixa no celular depois da abertura */
 (function () { var b = document.getElementById('barra'), h = document.querySelector('.hero'); if (!b || !h || !('IntersectionObserver' in window)) return;
   new IntersectionObserver(function (e) { var on = !e[0].isIntersecting; b.classList.toggle('on', on); b.setAttribute('aria-hidden', String(!on)); b.querySelector('button').tabIndex = on ? 0 : -1; }).observe(h); })();
 </script>
+<script>
+/* =====================================================================
+   LOTE 4 (site): cupom de desconto, chat de vendas com IA e tour guiado.
+   ===================================================================== */
+(function () {
+  var FS = 'https://firestore.googleapis.com/v1/projects/nexum-30044/databases/(default)/documents/', KEYF = 'AIzaSyDdcLJdO2qnmiGsR1EsKFu-uJfs4FRNvA4';
+  var es = function (t) { return String(t == null ? '' : t).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
+  var val = function (f) { if (!f) return null; if ('stringValue' in f) return f.stringValue; if ('integerValue' in f) return +f.integerValue; if ('doubleValue' in f) return +f.doubleValue; if ('booleanValue' in f) return f.booleanValue; if ('arrayValue' in f) return (f.arrayValue.values || []).map(val); return null; };
+
+  /* ---------- Cupom de desconto ---------- */
+  CK.cupom = null;
+  var cupomUrl = (new URLSearchParams(location.search).get('cupom') || '').toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 20);
+  try { if (cupomUrl) sessionStorage.setItem('nx_cupom', cupomUrl); else cupomUrl = sessionStorage.getItem('nx_cupom') || ''; } catch (e) { }
+  function descontoDe(t) { var c = CK.cupom; if (!c) return 0; return Math.round(Math.min(t, c.pct ? t * c.pct / 100 : c.valor) * 100) / 100; }
+  var _total = total; total = function () { var t = _total(); return Math.max(0, Math.round((t - descontoDe(t)) * 100) / 100); };
+  function cupomServe(c) {
+    var hoje = new Date().toISOString().slice(0, 10), its = itens().map(function (x) { return x[0]; });
+    if (!c || c.ativo === false) return 'Este cupom não está ativo.'; if (c.validoAte && c.validoAte < hoje) return 'Este cupom venceu.'; if (c.maxUsos && (c.usos || 0) >= c.maxUsos) return 'Este cupom já foi usado o máximo de vezes.';
+    if (c.planos && c.planos.length && !its.some(function (p) { return c.planos.indexOf(p) >= 0; })) return 'Este cupom não vale para o plano escolhido.';
+    if (c.meses === 1 && CK.meses !== 1) return 'Este cupom vale só para o pagamento mensal.'; if (c.meses > 1 && CK.meses < c.meses) return 'Este cupom vale para pedidos de ' + c.meses + ' meses ou mais.';
+    return '';
+  }
+  async function buscarCupom(cod) {
+    var r = await fetch(FS + 'cupons/' + encodeURIComponent(cod) + '?key=' + KEYF); if (r.status === 404 || r.status === 403) return null; if (!r.ok) throw new Error('falha ' + r.status);
+    var j = await r.json(), f = j.fields || {}, o = {}; Object.keys(f).forEach(function (k) { o[k] = val(f[k]); }); o.cod = cod; return o;
+  }
+  async function aplicarCupom(cod, silencioso) {
+    cod = String(cod || '').toUpperCase().replace(/[^A-Z0-9]/g, ''); if (!cod) { CK.cupom = null; desenhar(); return; }
+    var msg = document.getElementById('cp-msg'); if (msg) msg.textContent = 'Conferindo o cupom…';
+    try { var c = await buscarCupom(cod), erro = c ? cupomServe(c) : 'Cupom não encontrado.';
+      if (erro) { CK.cupom = null; if (!silencioso) { desenhar(); var m2 = document.getElementById('cp-msg'); if (m2) { m2.textContent = erro; m2.className = 'cp-msg erro'; } } return; }
+      CK.cupom = { cod: cod, pct: c.pct || 0, valor: c.valor || 0, meses: c.meses || 0, planos: c.planos || [] }; desenhar();
+    } catch (e) { if (msg) { msg.textContent = 'Não foi possível conferir o cupom agora. Tente de novo.'; msg.className = 'cp-msg erro'; } }
+  }
+  var _des = desenhar; desenhar = function () {
+    if (CK.cupom && cupomServe(CK.cupom) && CK.passo < 5) CK.cupom = null;
+    _des();
+    var d = document.getElementById('ck'), tot = d && d.querySelector('.ck-b .tot'); if (!tot || CK.passo > 4) return;
+    var bruto = _total(), desc = descontoDe(bruto);
+    if (CK.cupom) tot.insertAdjacentHTML('beforebegin', '<div class="cp-ok"><span>Cupom <b>' + es(CK.cupom.cod) + '</b> (' + (CK.cupom.pct ? String(CK.cupom.pct).replace('.', ',') + '%' : brl(CK.cupom.valor)) + ')</span><b>− ' + brl(desc) + '</b>' + (CK.passo === 4 ? '<button type="button" id="cp-x" aria-label="Remover cupom">×</button>' : '') + '</div>');
+    if (CK.passo === 4) {
+      if (!CK.cupom) tot.insertAdjacentHTML('beforebegin', '<div class="cp-in"><label for="cp-c">Tem um cupom de desconto?</label><div><input id="cp-c" autocomplete="off" placeholder="Digite o cupom" value="' + es(cupomUrl) + '"><button type="button" class="btn ln" id="cp-a">Aplicar</button></div><p class="cp-msg" id="cp-msg" aria-live="polite"></p></div>');
+      if (CK.cupom && CK.forma === 'cartao') tot.insertAdjacentHTML('afterend', '<p class="cp-msg">Com cupom, enviamos o link de pagamento com o desconto pelo WhatsApp.</p>');
+      var a = document.getElementById('cp-a'); if (a) { a.onclick = function () { aplicarCupom(document.getElementById('cp-c').value); }; document.getElementById('cp-c').onkeydown = function (e) { if (e.key === 'Enter') { e.preventDefault(); a.click(); } }; }
+      var x = document.getElementById('cp-x'); if (x) x.onclick = function () { CK.cupom = null; cupomUrl = ''; try { sessionStorage.removeItem('nx_cupom'); } catch (e) { } desenhar(); };
+      if (cupomUrl && !CK.cupom && !CK._cupTentou) { CK._cupTentou = 1; aplicarCupom(cupomUrl, true); }
+    }
+  };
+  window.__cupom = { aplicar: aplicarCupom, desconto: function () { return descontoDe(_total()); } };
+
+  /* ---------- Chat de vendas com IA ---------- */
+  var IA = { groq: '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', claude: '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', workspace: 'wrkspc_01YArvhE44tmUyNbKgyKBTn7', modeloGroq: 'openai/gpt-oss-120b', modeloClaude: 'claude-sonnet-5-5' };
+  var SIS = 'Você é o assistente de vendas do NEXUM RH no site nexumdp.com.br. Fale em português do Brasil, de forma simpática, objetiva e honesta, com respostas curtas (até 6 linhas). Nunca invente recursos, preços ou prazos que não estão aqui. Se não souber, diga que um consultor responde pelo WhatsApp.\n'
+    + 'Produto: sistema de RH on-line para comércio e redes de lojas no Brasil. Recursos: ponto pelo celular com reconhecimento do rosto e cerca de localização (Portaria 671/2021), cartão ponto, banco de horas, folha e holerite com cálculo de INSS, IRRF e FGTS, holerite assinado pelo celular, férias e 13º, admissão digital, demissão com TRCT, Portal do Colaborador (app no celular com holerites, férias, documentos, atendimento com IA), avaliação de desempenho, onboarding 30-60-90, alertas de vencimentos, eSocial e relatórios para o contador, acesso para o escritório de contabilidade.\n'
+    + 'Planos (por mês): Essencial R$ 99 (até 10 funcionários), Profissional R$ 299 (até 50 funcionários), Empresa R$ 499 (funcionários ilimitados). Recrutamento e Seleção: R$ 289/mês, sistema à parte (vagas com link, candidatura pelo celular, testes, entrevistas por vídeo e o aprovado vira admissão no RH), sem teste grátis. Teste grátis do RH: 14 dias, sem cartão. Pagamento: cartão (mensal automático) ou link (PIX, boleto ou cartão), também por 3, 6 ou 12 meses. Sem fidelidade: cancela quando quiser. Contadores podem ser parceiros e ganhar comissão. A NEXUM também faz recrutamento e seleção terceirizados (sem mensalidade): R$ 200 por candidato apresentado (triado e entrevistado pela NEXUM) e R$ 400 por candidato contratado; o pedido é feito no botão "Contratar a seleção terceirizada", na seção Seleção terceirizada do site. O anúncio mostra o nome da loja e a foto da vaga; o endereço da loja só é passado ao candidato aprovado, no fim.\n'
+    + 'Objetivo: entender o tamanho da empresa (quantos funcionários e lojas) e a dor principal, indicar o plano certo e convidar para o teste grátis ou para falar com um consultor. Quando a pessoa demonstrar interesse, peça nome e WhatsApp para um consultor chamar. Não peça CPF, senha nem dados de cartão.';
+  var SV = { aberto: false, msgs: [], lead: false, enviando: false };
+  async function ia(msgs, sis, max) {
+    try { var r = await fetch('https://api.groq.com/openai/v1/chat/completions', { method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + IA.groq }, body: JSON.stringify({ model: IA.modeloGroq, temperature: .4, max_tokens: max || 700, messages: [{ role: 'system', content: sis }].concat(msgs) }) });
+      if (r.ok) { var j = await r.json(), t = j.choices && j.choices[0] && j.choices[0].message.content; if (t) return t; } } catch (e) { }
+    try { var ms = msgs.slice(); while (ms.length && ms[0].role !== 'user') ms.shift();
+      var r2 = await fetch('https://api.anthropic.com/v1/messages', { method: 'POST', headers: { 'content-type': 'application/json', 'x-api-key': IA.claude, 'anthropic-version': '2023-06-01', 'anthropic-dangerous-direct-browser-access': 'true', 'anthropic-workspace-id': IA.workspace }, body: JSON.stringify({ model: IA.modeloClaude, max_tokens: max || 700, system: sis, messages: ms }) });
+      if (r2.ok) { var j2 = await r2.json(), t2 = (j2.content || []).filter(function (b) { return b.type === 'text'; }).map(function (b) { return b.text; }).join('\n'); if (t2) return t2; } } catch (e) { }
+    return null;
+  }
+  function respostaPadrao(t) { t = String(t || '').toLowerCase();
+    if (/pre[cç]o|quanto|valor|plano|custa/.test(t)) return 'Os planos são: Essencial R$ 99/mês (até 10 funcionários), Profissional R$ 299/mês (até 50) e Empresa R$ 499/mês (ilimitado). Dá para testar grátis por 14 dias, sem cartão. Quantos funcionários você tem?';
+    if (/ponto|rosto|biometr/.test(t)) return 'O ponto é pelo celular do funcionário, com reconhecimento do rosto e localização da loja, dentro da Portaria 671/2021. Quer testar grátis por 14 dias?';
+    if (/recrut|vaga|curr/.test(t)) return 'O Recrutamento e Seleção custa R$ 289/mês: vagas com link, candidatura pelo celular, testes e entrevistas por vídeo. O aprovado vira admissão no RH sozinho.';
+    return 'Posso te ajudar com planos, ponto pelo celular, folha, holerite e Portal do Colaborador. Se preferir, deixe seu WhatsApp que um consultor te chama.'; }
+  function md(t) { return es(t).replace(/\*\*(.+?)\*\*/g, '<b>$1</b>').replace(/^\s*[-*]\s+/gm, '• ').replace(/\n/g, '<br>'); }
+  function pinta() {
+    var c = document.getElementById('sv-c'); if (!c) return;
+    c.innerHTML = SV.msgs.map(function (m) { return '<div class="sv-m ' + (m.role === 'user' ? 'u' : 'b') + '">' + (m.role === 'user' ? es(m.content) : md(m.content)) + '</div>'; }).join('')
+      + (SV.enviando ? '<div class="sv-m b sv-dig"><i></i><i></i><i></i></div>' : '')
+      + (SV.form ? '<form class="sv-f" id="sv-f"><b>Um consultor te chama no WhatsApp</b><input id="sv-n" placeholder="Seu nome" autocomplete="name" required><input id="sv-w" placeholder="WhatsApp com DDD" inputmode="tel" autocomplete="tel" required><input id="sv-e" placeholder="Empresa (opcional)" autocomplete="organization"><input id="sv-q" placeholder="Quantos funcionários? (opcional)" inputmode="numeric"><label class="sv-lg"><input type="checkbox" id="sv-ok" required> Autorizo o contato da NEXUM RH pelo WhatsApp sobre esta conversa.</label><button class="btn br" type="submit">Quero ser chamado</button></form>' : '')
+      + (SV.lead ? '<div class="sv-m b">Prontinho! Um consultor vai te chamar no WhatsApp. Se preferir, comece agora o teste grátis.</div>' : '');
+    c.scrollTop = c.scrollHeight;
+    var f = document.getElementById('sv-f'); if (f) f.onsubmit = function (e) { e.preventDefault(); salvarLead(); };
+  }
+  async function enviar(t) {
+    t = String(t || '').trim().slice(0, 600); if (!t || SV.enviando) return; SV.msgs.push({ role: 'user', content: t }); SV.enviando = true; pinta();
+    var r = await ia(SV.msgs.slice(-12), SIS); SV.enviando = false; SV.msgs.push({ role: 'assistant', content: r || respostaPadrao(t) });
+    var nu = SV.msgs.filter(function (m) { return m.role === 'user'; }).length; if (!SV.lead && !SV.form && (nu >= 3 || /whats|consultor|contato|ligar|chamar|me liga|telefone|falar com/i.test(t))) SV.form = true;
+    pinta();
+  }
+  async function salvarLead() {
+    var g = function (id) { var e = document.getElementById(id); return e ? e.value.trim() : ''; }, nome = g('sv-n').slice(0, 120), wa = g('sv-w').replace(/\D/g, '').slice(0, 13), emp = g('sv-e').slice(0, 160), qt = g('sv-q').replace(/\D/g, '').slice(0, 6);
+    if (nome.length < 2 || wa.length < 10) { alert('Informe seu nome e um WhatsApp com DDD.'); return; } if (!document.getElementById('sv-ok').checked) { alert('Autorize o contato para continuar.'); return; }
+    var b = document.querySelector('#sv-f button'); b.disabled = true; b.textContent = 'Enviando…';
+    var conv = SV.msgs.slice(-30).map(function (m) { return { r: m.role === 'user' ? 'u' : 'b', t: String(m.content).slice(0, 900) }; }), resumo = '', plano = '';
+    try { var r = await ia([{ role: 'user', content: 'Conversa:\n' + conv.map(function (m) { return (m.r === 'u' ? 'Cliente: ' : 'Assistente: ') + m.t; }).join('\n') + '\nFuncionários informados: ' + (qt || 'não informado') + '\nResponda só um JSON: {"resumo":"interesse e dor do cliente em 1 frase","plano":"Essencial|Profissional|Empresa|Recrutamento|indefinido"}' }], 'Você resume conversas de vendas em português. Responda apenas JSON válido.', 200);
+      var j = JSON.parse(String(r || '').replace(/```json|```/g, '').trim().match(/\{[\s\S]*\}/)[0]); resumo = String(j.resumo || '').slice(0, 400); plano = String(j.plano || '').slice(0, 40); } catch (e) { resumo = conv.filter(function (m) { return m.r === 'u'; }).map(function (m) { return m.t; }).join(' | ').slice(0, 400); }
+    var S = function (v) { return { stringValue: String(v) }; }, corpo = { fields: { nome: S(nome), whatsapp: S(wa), empresa: S(emp), funcionarios: S(qt), resumo: S(resumo), plano: S(plano), status: S('novo'), origem: S('chat do site'), em: S(new Date().toISOString()), conversa: { arrayValue: { values: conv.map(function (m) { return { mapValue: { fields: { r: S(m.r), t: S(m.t) } } }; }) } } } };
+    try { await fetch(FS + 'leads?key=' + KEYF, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(corpo) }); } catch (e) { }
+    SV.form = false; SV.lead = true; pinta();
+    var w = 'https://wa.me/55' + String(typeof waVendas === 'function' ? waVendas() : WHATS_PADRAO).replace(/\D/g, '') + '?text=' + encodeURIComponent('Olá! Sou ' + nome + (emp ? ', da ' + emp : '') + '. Conversei com o assistente do site e quero saber mais sobre o NEXUM RH.' + (qt ? ' Temos ' + qt + ' funcionários.' : ''));
+    var c = document.getElementById('sv-c'); c.insertAdjacentHTML('beforeend', '<div class="sv-acoes"><a class="btn ln" href="' + w + '" target="_blank" rel="noopener">Abrir o WhatsApp agora</a><a class="btn br" href="' + APP + '#criar">Testar grátis</a></div>'); c.scrollTop = c.scrollHeight;
+  }
+  function abrirChat() {
+    var p = document.getElementById('sv-p'); SV.aberto = !SV.aberto; p.hidden = !SV.aberto; document.getElementById('sv-b').setAttribute('aria-expanded', String(SV.aberto));
+    if (SV.aberto && !SV.msgs.length) { SV.msgs.push({ role: 'assistant', content: 'Olá! Sou o assistente do NEXUM RH. Posso te ajudar a escolher o plano, explicar o ponto pelo celular ou tirar dúvidas. Quantos funcionários tem a sua empresa?' }); pinta(); }
+    if (SV.aberto) setTimeout(function () { var i = document.getElementById('sv-t'); if (i) i.focus(); }, 60);
+  }
+  document.body.insertAdjacentHTML('beforeend', '<button class="sv-b" id="sv-b" aria-expanded="false" aria-controls="sv-p"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg><span>Tire suas dúvidas</span></button>'
+    + '<section class="sv-p" id="sv-p" hidden aria-label="Chat de vendas"><header><div><b>Assistente NEXUM</b><small>Responde na hora</small></div><button type="button" id="sv-x" aria-label="Fechar o chat">×</button></header><div class="sv-c" id="sv-c" aria-live="polite"></div>'
+    + '<div class="sv-s">' + ['Quanto custa?', 'Como funciona o ponto?', 'Tenho 3 lojas', 'Quero falar com um consultor'].map(function (s) { return '<button type="button" data-sv="' + es(s) + '">' + es(s) + '</button>'; }).join('') + '</div>'
+    + '<form class="sv-in" id="sv-in"><input id="sv-t" placeholder="Escreva sua pergunta" maxlength="600" autocomplete="off"><button class="btn br" type="submit" aria-label="Enviar">➤</button></form></section>');
+  document.getElementById('sv-b').onclick = abrirChat; document.getElementById('sv-x').onclick = abrirChat;
+  document.getElementById('sv-in').onsubmit = function (e) { e.preventDefault(); var i = document.getElementById('sv-t'); enviar(i.value); i.value = ''; };
+  [].forEach.call(document.querySelectorAll('[data-sv]'), function (b) { b.onclick = function () { if (/consultor/.test(b.dataset.sv)) { SV.msgs.push({ role: 'user', content: b.dataset.sv }); SV.form = true; pinta(); } else enviar(b.dataset.sv); }; });
+  window.__sv = SV;
+
+  /* ---------- Tour guiado ---------- */
+  var ck = '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>';
+  var PASSOS = [
+    ['Painel do RH', 'Tudo o que precisa da sua atenção hoje em uma tela: quem já bateu o ponto, quem faltou, férias vencendo e documentos para assinar.',
+      '<div class="tg-app"><div class="tg-side"><i class="on"></i><i></i><i></i><i></i><i></i></div><div class="tg-main"><div class="tg-kpis"><div><b>42</b><span>presentes</span></div><div><b>3</b><span>atrasos</span></div><div><b class="r">1</b><span>falta</span></div><div><b>2</b><span>férias a vencer</span></div></div><div class="tg-bars">' + [60, 80, 72, 90, 85, 40, 30].map(function (h, i) { return '<i style="height:' + h + '%"><em>' + 'STQQSSD'[i] + '</em></i>'; }).join('') + '</div><div class="tg-al"><span class="w">Experiência de Ana vence em 3 dias</span><span>Holerite de setembro: 38 de 45 assinados</span></div></div></div>'],
+    ['Ponto pelo rosto, no celular', 'O funcionário bate o ponto no próprio celular. O sistema confere o rosto e se ele está na loja, e gera o comprovante na hora.',
+      '<div class="tg-fone"><div class="tg-cam"><div class="tg-oval"></div></div><b>08:02</b><span>Entrada · Loja Centro</span><div class="tg-ok">' + ck + ' Rosto confirmado</div></div>'],
+    ['Folha e holerite sem planilha', 'Horas extras, faltas, DSR, INSS, IRRF e FGTS calculados a partir do ponto. O holerite vai para o celular e o funcionário assina.',
+      '<div class="tg-hol"><div class="tg-hh"><b>Holerite · Setembro</b><span>Ana Souza · Vendedora</span></div>' + [['Salário', '2.000,00', ''], ['Horas extras 50%', '163,64', ''], ['INSS', '− 166,90', 'r'], ['Vale-transporte (6%)', '− 120,00', 'r']].map(function (x) { return '<div class="tg-l"><span>' + x[0] + '</span><b class="' + x[2] + '">' + x[1] + '</b></div>'; }).join('') + '<div class="tg-l tg-liq"><span>Líquido</span><b>1.876,74</b></div><div class="tg-ok">' + ck + ' Assinado pelo celular</div></div>'],
+    ['Portal do Colaborador', 'Um aplicativo para a equipe: holerites, férias, documentos, agenda e um assistente com IA que explica o holerite e tira dúvidas.',
+      '<div class="tg-fone tg-chat"><div class="tg-b u">Por que meu salário veio menor?</div><div class="tg-b">Neste mês teve 1 falta sem justificativa (− R$ 66,67) e o DSR da semana (− R$ 66,67). O resto ficou igual a agosto.</div><div class="tg-b u">Entendi, obrigada!</div></div>'],
+    ['Admissão e recrutamento', 'Do candidato aprovado à admissão digital: a ficha é preenchida no celular, com foto e documentos, e o exame admissional é encaminhado.',
+      '<div class="tg-flow"><div>Vaga publicada</div><i>→</i><div>Candidato aprovado</div><i>→</i><div class="on">Admissão digital</div><i>→</i><div>Ponto liberado</div></div><div class="tg-al" style="margin-top:14px"><span>Bruna Souza · Vendedora · começa segunda</span><span class="w">eSocial S-2200 até sexta</span></div>'],
+    ['Pronto para testar?', '14 dias grátis, sem cartão e sem instalar nada. Em 10 minutos a sua equipe já bate o ponto pelo celular.',
+      '<div class="tg-fim"><b>Essencial</b><span>R$ 99/mês</span><b>Profissional</b><span>R$ 299/mês</span><b>Empresa</b><span>R$ 499/mês</span></div>']
+  ];
+  var TG = { i: 0 };
+  function tour() {
+    var d = document.getElementById('tg'); if (!d) { document.body.insertAdjacentHTML('beforeend', '<dialog class="tgd" id="tg" aria-labelledby="tg-t"><button class="tg-x" id="tg-x" aria-label="Fechar o tour">×</button><div class="tg-w"><div class="tg-cena" id="tg-cena" aria-hidden="true"></div><div class="tg-txt"><span class="tg-n" id="tg-n"></span><h2 id="tg-t"></h2><p id="tg-p"></p><div class="tg-dots" id="tg-dots"></div><div class="tg-nav"><button class="btn ln" id="tg-a">Voltar</button><button class="btn br" id="tg-s">Próximo</button></div></div></div></dialog>'); d = document.getElementById('tg');
+      document.getElementById('tg-x').onclick = function () { d.close(); }; document.getElementById('tg-a').onclick = function () { if (TG.i > 0) { TG.i--; mostra(); } };
+      document.getElementById('tg-s').onclick = function () { if (TG.i < PASSOS.length - 1) { TG.i++; mostra(); } else { d.close(); location.href = APP + '#criar'; } };
+      d.addEventListener('keydown', function (e) { if (e.key === 'ArrowRight') document.getElementById('tg-s').click(); if (e.key === 'ArrowLeft') document.getElementById('tg-a').click(); }); }
+    TG.i = 0; mostra(); d.showModal();
+  }
+  function mostra() {
+    var p = PASSOS[TG.i]; document.getElementById('tg-cena').innerHTML = p[2]; document.getElementById('tg-t').textContent = p[0]; document.getElementById('tg-p').textContent = p[1]; document.getElementById('tg-n').textContent = (TG.i + 1) + ' de ' + PASSOS.length;
+    document.getElementById('tg-dots').innerHTML = PASSOS.map(function (_, i) { return '<button aria-label="Passo ' + (i + 1) + '" class="' + (i === TG.i ? 'on' : '') + '" data-tg="' + i + '"></button>'; }).join('');
+    [].forEach.call(document.querySelectorAll('[data-tg]'), function (b) { b.onclick = function () { TG.i = +b.dataset.tg; mostra(); }; });
+    document.getElementById('tg-a').style.visibility = TG.i ? 'visible' : 'hidden'; document.getElementById('tg-s').textContent = TG.i === PASSOS.length - 1 ? 'Testar grátis' : 'Próximo';
+    var c = document.getElementById('tg-cena'); c.classList.remove('in'); void c.offsetWidth; c.classList.add('in');
+  }
+  var dm = document.querySelector('.hero .dm'); if (dm) dm.insertAdjacentHTML('beforebegin', '<button type="button" class="dm tg-abre" id="tg-abre">▶ Tour guiado de 1 minuto</button>');
+  var ab = document.getElementById('tg-abre'); if (ab) ab.onclick = tour; window.__tour = tour;
+})();
+</script>
+<style>
+.cp-in{margin:14px 0 4px}.cp-in label{display:block;font-weight:600;font-size:14.5px;margin-bottom:6px;color:var(--ink)}.cp-in>div{display:flex;gap:8px}.cp-in input{flex:1;min-width:0;text-transform:uppercase;padding:11px 12px;border:1px solid var(--line);border-radius:10px;font:inherit}
+.cp-msg{font-size:13.5px;color:var(--ink2);margin:6px 0 0;min-height:1em}.cp-msg.erro{color:#C62828}
+.cp-ok{display:flex;align-items:center;gap:10px;margin-top:12px;padding:10px 12px;border-radius:10px;background:#EAF7F0;color:#0B6B49}.cp-ok span{flex:1}.cp-ok button{border:0;background:none;font-size:20px;line-height:1;cursor:pointer;color:inherit}
+.sv-b{position:fixed;right:18px;bottom:18px;z-index:70;display:flex;align-items:center;gap:8px;padding:13px 18px;border:0;border-radius:999px;background:var(--blue);color:#fff;font:600 15px/1 inherit;box-shadow:0 12px 30px rgba(31,95,232,.35);cursor:pointer}
+.sv-b:hover{background:var(--blue-d)}body:has(.barra.on) .sv-b,body:has(.barra.on) .sv-p{bottom:86px}
+.sv-p{position:fixed;right:18px;bottom:82px;z-index:71;width:min(380px,calc(100vw - 24px));height:min(560px,calc(100vh - 120px));background:#fff;border-radius:18px;box-shadow:0 24px 60px rgba(6,26,75,.28);display:flex;flex-direction:column;overflow:hidden;border:1px solid var(--line)}
+.sv-p[hidden]{display:none}.sv-p header{display:flex;align-items:center;gap:10px;padding:14px 16px;background:linear-gradient(135deg,var(--navy),var(--navy2));color:#fff}.sv-p header div{flex:1;display:flex;flex-direction:column}.sv-p header small{opacity:.75}.sv-p header button{border:0;background:none;color:#fff;font-size:24px;cursor:pointer;line-height:1}
+.sv-c{flex:1;overflow:auto;padding:14px;display:flex;flex-direction:column;gap:8px;background:var(--paper)}.sv-m{max-width:86%;padding:10px 12px;border-radius:14px;line-height:1.5;font-size:14.5px}.sv-m.b{background:#fff;border:1px solid var(--line);align-self:flex-start;color:var(--ink)}.sv-m.u{background:var(--blue);color:#fff;align-self:flex-end}
+.sv-dig{display:flex;gap:4px}.sv-dig i{width:7px;height:7px;border-radius:50%;background:var(--ink3);animation:svd 1s infinite}.sv-dig i:nth-child(2){animation-delay:.15s}.sv-dig i:nth-child(3){animation-delay:.3s}@keyframes svd{50%{opacity:.25}}
+.sv-s{display:flex;gap:6px;overflow-x:auto;padding:8px 12px;border-top:1px solid var(--line)}.sv-s button{flex:none;border:1px solid var(--line);background:#fff;border-radius:999px;padding:7px 12px;font:13px inherit;cursor:pointer;color:var(--ink)}
+.sv-in{display:flex;gap:8px;padding:10px 12px;border-top:1px solid var(--line)}.sv-in input{flex:1;min-width:0;padding:11px 12px;border:1px solid var(--line);border-radius:10px;font:inherit}.sv-in .btn{padding:0 16px}
+.sv-f{display:flex;flex-direction:column;gap:8px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px}.sv-f input:not([type=checkbox]){padding:10px 12px;border:1px solid var(--line);border-radius:10px;font:inherit}.sv-lg{font-size:12.5px;color:var(--ink2);display:flex;gap:6px;align-items:flex-start}
+.sv-acoes{display:flex;gap:8px;flex-wrap:wrap}.sv-acoes .btn{flex:1;text-align:center}
+.tg-abre{background:none;border:0;cursor:pointer;font:inherit;padding:0;margin-right:16px}
+.tgd{border:0;padding:0;border-radius:22px;width:min(920px,calc(100vw - 24px));max-height:calc(100vh - 24px);overflow:auto;box-shadow:0 30px 80px rgba(6,26,75,.4)}.tgd::backdrop{background:rgba(6,26,75,.6)}
+.tg-x{position:absolute;right:14px;top:10px;border:0;background:none;font-size:28px;cursor:pointer;color:var(--ink2);z-index:2}
+.tg-w{display:grid;grid-template-columns:1.15fr 1fr;min-height:430px}.tg-cena{background:linear-gradient(140deg,#0A2A72,#061A4B);display:grid;place-items:center;padding:28px;overflow:hidden}.tg-cena.in>*{animation:tgi .45s ease both}@keyframes tgi{from{opacity:0;transform:translateY(14px) scale(.98)}}
+.tg-txt{padding:40px 34px 28px;display:flex;flex-direction:column}.tg-n{color:var(--blue);font-weight:700;font-size:13px;letter-spacing:.04em;text-transform:uppercase}.tg-txt h2{margin:8px 0 10px;font-size:28px;color:var(--ink)}.tg-txt p{color:var(--ink2);font-size:16.5px;line-height:1.6;margin:0;flex:1}
+.tg-dots{display:flex;gap:6px;margin:20px 0}.tg-dots button{width:9px;height:9px;border-radius:50%;border:0;background:var(--line);cursor:pointer;padding:0}.tg-dots button.on{background:var(--blue);width:24px;border-radius:6px}.tg-nav{display:flex;justify-content:space-between;gap:10px}
+.tg-app{width:100%;max-width:440px;background:#fff;border-radius:14px;display:flex;overflow:hidden;box-shadow:0 18px 40px rgba(0,0,0,.3)}.tg-side{width:44px;background:#061A4B;padding:12px 10px;display:flex;flex-direction:column;gap:10px}.tg-side i{height:8px;border-radius:4px;background:rgba(255,255,255,.2)}.tg-side i.on{background:var(--sky)}
+.tg-main{flex:1;padding:14px}.tg-kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}.tg-kpis div{border:1px solid var(--line);border-radius:10px;padding:8px}.tg-kpis b{display:block;font-size:20px;color:var(--ink)}.tg-kpis b.r{color:#C62828}.tg-kpis span{font-size:10.5px;color:var(--ink3)}
+.tg-bars{height:90px;display:flex;align-items:flex-end;gap:8px;margin:14px 4px 18px}.tg-bars i{flex:1;background:linear-gradient(var(--sky),var(--blue));border-radius:6px 6px 2px 2px;position:relative}.tg-bars em{position:absolute;bottom:-16px;left:0;right:0;text-align:center;font-size:10px;color:var(--ink3);font-style:normal}
+.tg-al{display:flex;flex-direction:column;gap:6px}.tg-al span{font-size:12px;padding:7px 10px;border-radius:8px;background:#F1F5FD;color:var(--ink)}.tg-al span.w{background:#FFF4E5;color:#8A5300}
+.tg-fone{width:210px;background:#fff;border-radius:28px;padding:18px 14px;box-shadow:0 18px 40px rgba(0,0,0,.35);display:flex;flex-direction:column;align-items:center;gap:6px;border:6px solid #0E1A4A}.tg-fone b{font-size:30px;color:var(--ink)}.tg-fone span{font-size:12px;color:var(--ink3)}
+.tg-cam{width:150px;height:170px;border-radius:16px;background:linear-gradient(#DCE6F8,#B9CBEF);display:grid;place-items:center}.tg-oval{width:96px;height:124px;border:3px solid #22C08A;border-radius:50%;box-shadow:0 0 0 400px rgba(14,26,74,.15)}
+.tg-ok{display:flex;align-items:center;gap:6px;background:#EAF7F0;color:#0B6B49;border-radius:999px;padding:6px 12px;font-size:12.5px;font-weight:600;margin-top:6px}
+.tg-hol{width:100%;max-width:340px;background:#fff;border-radius:14px;padding:16px;box-shadow:0 18px 40px rgba(0,0,0,.3)}.tg-hh{display:flex;flex-direction:column;margin-bottom:10px}.tg-hh span{font-size:12px;color:var(--ink3)}.tg-l{display:flex;justify-content:space-between;font-size:13.5px;padding:7px 0;border-bottom:1px dashed var(--line)}.tg-l b.r{color:#C62828}.tg-liq{border:0;font-size:16px}.tg-liq b{color:var(--ok)}
+.tg-chat{gap:8px;align-items:stretch;padding:16px 12px}.tg-b{font-size:12.5px;line-height:1.45;padding:8px 10px;border-radius:12px;background:#F1F5FD;color:var(--ink);max-width:88%}.tg-b.u{background:var(--blue);color:#fff;align-self:flex-end}
+.tg-flow{display:flex;flex-wrap:wrap;gap:8px;align-items:center;justify-content:center;max-width:420px}.tg-flow div{background:rgba(255,255,255,.1);color:#fff;border:1px solid rgba(255,255,255,.25);border-radius:12px;padding:12px 14px;font-weight:600;font-size:14px}.tg-flow div.on{background:#22C08A;border-color:#22C08A}.tg-flow i{color:#9FC2FF;font-style:normal;font-size:20px}
+.tg-fim{display:grid;grid-template-columns:auto auto;gap:10px 24px;color:#fff;font-size:18px}.tg-fim span{color:#9FC2FF;text-align:right}
+@media(max-width:760px){.tg-w{grid-template-columns:1fr}.tg-cena{min-height:260px;padding:20px}.tg-txt{padding:22px 20px}.tg-txt h2{font-size:22px}.sv-b span{display:none}.sv-b{padding:15px}.sv-p{right:12px;bottom:76px}}
+</style>
+
+<script>
+/* =====================================================================
+   Recrutamento e seleção terceirizados pela NEXUM (R$ 200 por candidato
+   apresentado, R$ 400 por candidato contratado): pedido pelo site.
+   ===================================================================== */
+(function () {
+  var FS = 'https://firestore.googleapis.com/v1/projects/nexum-30044/databases/(default)/documents/', KEYF = 'AIzaSyDdcLJdO2qnmiGsR1EsKFu-uJfs4FRNvA4';
+  var es = function (t) { return String(t == null ? '' : t).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
+  var linhaVaga = function (i) { return '<div class="st-v" data-i="' + i + '"><input placeholder="Cargo (ex.: vendedor)" class="st-c" maxlength="80"><input placeholder="Nome da loja" class="st-lj" maxlength="80"><input placeholder="Qtd." class="st-q" inputmode="numeric" maxlength="3" value="1"><input placeholder="Salário (opcional)" class="st-s" maxlength="40"></div>'; };
+  document.body.insertAdjacentHTML('beforeend', '<dialog class="std" id="std" aria-labelledby="std-t"><form method="dialog" id="st-f" novalidate><div class="std-h"><h2 id="std-t">Seleção terceirizada pela NEXUM</h2><button type="button" class="std-x" id="std-x" aria-label="Fechar">×</button></div><div class="std-b">'
+    + '<p class="std-pr"><b>R$ 200</b> por candidato apresentado · <b>R$ 400</b> por candidato contratado. Sem mensalidade.</p>'
+    + '<div class="cmp"><div class="full"><label for="st-e">Empresa</label><input id="st-e" autocomplete="organization" maxlength="160"></div><div><label for="st-cn">CNPJ</label><input id="st-cn" inputmode="numeric" maxlength="18"></div><div><label for="st-r">Responsável</label><input id="st-r" autocomplete="name" maxlength="120"></div>'
+    + '<div><label for="st-w">WhatsApp</label><input id="st-w" type="tel" inputmode="tel" autocomplete="tel" placeholder="(45) 99999-9999"></div><div><label for="st-m">E-mail</label><input id="st-m" type="email" autocomplete="email" maxlength="160"></div><div class="full"><label for="st-ci">Cidade/UF</label><input id="st-ci" placeholder="Foz do Iguaçu/PR" maxlength="80"></div></div>'
+    + '<h3 class="std-s">Vagas</h3><div id="st-vs">' + linhaVaga(0) + '</div><button type="button" class="btn ln" id="st-mais" style="margin-top:6px">+ Outra vaga</button>'
+    + '<div class="cmp" style="margin-top:12px"><div class="full"><label for="st-o">Horário, perfil desejado e observações</label><textarea id="st-o" maxlength="1500" rows="3"></textarea></div></div>'
+    + '<label class="chk"><input type="checkbox" id="st-ac"><span>Concordo com as condições: R$ 200 por candidato apresentado e R$ 400 por candidato contratado, cobrados após cada entrega. O endereço da loja só é passado ao candidato aprovado, no fim do processo.</span></label><p class="std-er" id="st-er" role="alert"></p></div>'
+    + '<div class="std-f"><button type="button" class="btn ln" id="st-c">Cancelar</button><button type="submit" class="btn br" id="st-ok">Enviar pedido</button></div></form></dialog>');
+  var d = document.getElementById('std'), n = 1;
+  function abrir() { d.showModal(); setTimeout(function () { document.getElementById('st-e').focus(); }, 50); }
+  [].forEach.call(document.querySelectorAll('[data-st]'), function (b) { b.onclick = abrir; });
+  document.getElementById('std-x').onclick = document.getElementById('st-c').onclick = function () { d.close(); };
+  document.getElementById('st-mais').onclick = function () { if (n >= 10) return; document.getElementById('st-vs').insertAdjacentHTML('beforeend', linhaVaga(n++)); };
+  document.getElementById('st-f').onsubmit = async function (e) {
+    e.preventDefault(); var g = function (id) { return document.getElementById(id).value.trim(); }, er = document.getElementById('st-er'); er.textContent = '';
+    var vagas = [].map.call(document.querySelectorAll('.st-v'), function (x) { return { cargo: x.querySelector('.st-c').value.trim(), loja: x.querySelector('.st-lj').value.trim(), qtd: Math.max(1, parseInt(x.querySelector('.st-q').value) || 1), salario: x.querySelector('.st-s').value.trim() }; }).filter(function (v) { return v.cargo; });
+    var wa = g('st-w').replace(/\D/g, '');
+    if (g('st-e').length < 2 || g('st-r').length < 2) { er.textContent = 'Informe a empresa e o responsável.'; return; }
+    if (wa.length < 10) { er.textContent = 'Informe um WhatsApp com DDD.'; return; }
+    if (!vagas.length) { er.textContent = 'Informe ao menos uma vaga.'; return; }
+    if (!document.getElementById('st-ac').checked) { er.textContent = 'Aceite as condições para enviar o pedido.'; return; }
+    var b = document.getElementById('st-ok'); b.disabled = true; b.textContent = 'Enviando…';
+    var S = function (v) { return { stringValue: String(v) }; }, ag = new Date().toISOString(), num = 'RS-' + Date.now().toString(36).toUpperCase().slice(-6);
+    var corpo = { fields: { numero: S(num), origem: S('site'), empresa: S(g('st-e')), cnpj: S(g('st-cn').replace(/\D/g, '')), responsavel: S(g('st-r')), whatsapp: S(wa), email: S(g('st-m').toLowerCase()), cidade: S(g('st-ci')), obs: S(g('st-o')), aceite: { booleanValue: true }, aceiteEm: S(ag), em: S(ag), status: S('novo'),
+      vagas: { arrayValue: { values: vagas.map(function (v) { return { mapValue: { fields: { cargo: S(v.cargo), loja: S(v.loja), qtd: { integerValue: String(v.qtd) }, salario: S(v.salario) } } }; }) } } } };
+    try { await fetch(FS + 'rsTerceirizado?key=' + KEYF, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(corpo) }); } catch (x) { }
+    var txt = 'Olá! Pedido ' + num + ' de seleção terceirizada pelo site.\nEmpresa: ' + g('st-e') + '\nResponsável: ' + g('st-r') + '\nCidade: ' + g('st-ci') + '\nVagas:\n' + vagas.map(function (v) { return '• ' + v.cargo + (v.loja ? ' — ' + v.loja : '') + ' (' + v.qtd + ')' + (v.salario ? ' · ' + v.salario : ''); }).join('\n') + '\n\nAceito R$ 200 por candidato apresentado e R$ 400 por candidato contratado.';
+    var w = 'https://wa.me/55' + String(typeof waVendas === 'function' ? waVendas() : WHATS_PADRAO).replace(/\D/g, '') + '?text=' + encodeURIComponent(txt);
+    d.querySelector('.std-b').innerHTML = '<div class="okk"><p style="margin:0;color:var(--ink2)">Número do pedido</p><div class="n">' + es(num) + '</div><p>Recebemos o seu pedido. A equipe da NEXUM chama você no WhatsApp para alinhar o perfil e começar a divulgação.</p><a class="btn br" style="width:100%" href="' + w + '" target="_blank" rel="noopener">Falar agora no WhatsApp</a></div>';
+    d.querySelector('.std-f').innerHTML = '<button type="button" class="btn ln" onclick="document.getElementById(\'std\').close()">Fechar</button>';
+  };
+  /* o assistente de vendas também conhece o serviço */
+  try { var nav = document.querySelector('header nav[aria-label="Seções"]'); if (nav && !nav.querySelector('[href="#selecao"]')) nav.querySelector('[href="#recrutamento"]').insertAdjacentHTML('afterend', '<a href="#selecao" style="white-space:nowrap">Seleção NEXUM</a>'); } catch (x) { }
+})();
+</script>
+<style>
+#selecao .tag{display:inline-block;margin-bottom:12px}
+.st-g{display:grid;grid-template-columns:1fr 1fr 2fr;gap:20px;align-items:stretch}.st-p{background:#fff;border:1px solid var(--line);border-radius:20px;padding:26px;display:flex;flex-direction:column;gap:6px}.st-p span{color:var(--ink2);font-weight:600}.st-p b{font-size:44px;color:var(--navy);letter-spacing:-.02em}.st-p small{color:var(--ink2);font-size:15px;line-height:1.5}
+.st-p.dest{background:linear-gradient(140deg,var(--navy2),var(--navy));border-color:transparent}.st-p.dest span,.st-p.dest small{color:#BFD3FF}.st-p.dest b{color:#fff}
+.st-l{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:14px;counter-reset:s}.st-l li{background:#fff;border:1px solid var(--line);border-radius:16px;padding:16px 18px;counter-increment:s;display:flex;flex-direction:column;gap:4px}.st-l li::before{content:counter(s);width:28px;height:28px;border-radius:50%;background:var(--blue);color:#fff;display:grid;place-items:center;font-weight:700;font-size:14px;margin-bottom:4px}.st-l b{color:var(--ink)}.st-l span{color:var(--ink2);font-size:14.5px;line-height:1.5}
+.st-a{display:flex;align-items:center;gap:18px;flex-wrap:wrap;margin-top:28px}.st-a span{color:var(--ink2)}
+dialog.std{border:0;padding:0;border-radius:22px;width:min(680px,calc(100% - 24px));max-height:calc(100dvh - 24px);box-shadow:0 30px 80px rgba(3,12,40,.45);color:var(--ink)}dialog.std::backdrop{background:rgba(4,18,58,.62)}
+.std-h{display:flex;align-items:center;padding:20px 24px 8px}.std-h h2{flex:1;margin:0;font-size:22px}.std-x{border:0;background:none;font-size:28px;cursor:pointer;color:var(--ink2)}.std-b{padding:6px 24px 10px}.std-f{display:flex;justify-content:flex-end;gap:10px;padding:14px 24px 22px}
+.std textarea{width:100%;border:1.5px solid var(--line);border-radius:10px;padding:10px 12px;font:inherit;font-size:15.5px}.std-pr{background:#EAF1FF;border-radius:12px;padding:10px 14px;margin:0 0 14px}.std-s{margin:16px 0 8px;font-size:16px}.std-er{color:#C62828;min-height:1em;margin:6px 0 0}
+.st-v{display:grid;grid-template-columns:2fr 2fr 70px 1.4fr;gap:8px;margin-bottom:8px}.st-v input{min-width:0;padding:10px 12px;border:1px solid var(--line);border-radius:10px;font:inherit}
+@media(max-width:900px){.st-g{grid-template-columns:1fr 1fr}.st-l{grid-column:1/-1}}@media(max-width:600px){.st-g,.st-l{grid-template-columns:1fr}.st-v{grid-template-columns:1fr 1fr}}
+</style>
+
 </body>
 </html>

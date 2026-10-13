@@ -439,6 +439,8 @@ function telaAcesso() {
   return '<div style="text-align:left;border:1px solid #F3C98B;background:#FFF7EA;border-radius:14px;padding:12px 16px;margin:14px 0 6px;font-size:14.5px">Não conseguimos criar o seu login agora. Fique tranquilo: o pedido foi registrado e liberamos o acesso pelo WhatsApp.</div>';
 }
 function waVendas() { return window.WHATS_VENDAS || WHATS_PADRAO; }
+/* link direto para a compra: ?comprar=recrutamento&email=... (usado pelo sistema de recrutamento) */
+window.addEventListener('load', function () { var q = new URLSearchParams(location.search), pl = q.get('comprar'), em = (q.get('email') || '').trim(); if (!pl || !PLANOS[pl]) return; setTimeout(function () { if (/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em)) CK.d.mail = em; abrirCompra(pl); }, 300); });
 /* ---------- Asaas: QR do PIX, copia e cola, cartão/boleto e confirmação automática ---------- */
 (function () { fetch('https://firestore.googleapis.com/v1/projects/nexum-30044/databases/(default)/documents/plataforma/publico?key=AIzaSyDdcLJdO2qnmiGsR1EsKFu-uJfs4FRNvA4').then(function (r) { return r.ok ? r.json() : null; }).then(function (j) { var u = j && j.fields && j.fields.asaasUrl && j.fields.asaasUrl.stringValue; if (u) window.NX_ASAAS = u.replace(/\/+$/, ''); }).catch(function () { }); })();
 function asaasBloco() {

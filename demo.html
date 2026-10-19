@@ -33,6 +33,7 @@ h1{font-size:26px;margin:0 0 6px;line-height:1.2}h2{font-size:17px;margin:0 0 10
   <section class="card"><h2>1. Escolha o dia e a hora</h2><div class="dias" id="dias" role="group" aria-label="Dias"></div><div class="horas" id="horas" role="group" aria-label="Horários"></div><p class="mut" id="msgH" style="margin:10px 0 0">Horário de Brasília.</p></section>
   <section class="card"><h2>2. Seus dados</h2><div class="row"><div><label for="nm">Seu nome</label><input id="nm" autocomplete="name"></div><div><label for="wa">WhatsApp com DDD</label><input id="wa" inputmode="tel" autocomplete="tel" placeholder="(45) 99999-9999"></div></div>
     <div class="row"><div><label for="em">Empresa</label><input id="em" autocomplete="organization"></div><div><label for="fu">Quantos funcionários?</label><input id="fu" inputmode="numeric"></div></div>
+    <div class="row"><div><label for="ml">E-mail (opcional, para receber a confirmação)</label><input id="ml" type="email" autocomplete="email"></div></div>
     <label for="ob">Quer contar algo antes? (opcional)</label><textarea id="ob" rows="2" maxlength="300" placeholder="Ex.: tenho 3 lojas e o ponto hoje é no papel"></textarea>
     <label style="display:flex;gap:8px;font-weight:400;margin-top:12px"><input type="checkbox" id="ac" style="width:auto"> Autorizo a NEXUM a falar comigo pelo WhatsApp sobre a demonstração.</label>
     <div style="margin-top:14px"><button class="btn" id="ok" style="width:100%">Agendar demonstração</button></div><p class="mut" id="msg" role="status"></p></section>
@@ -70,7 +71,7 @@ $('#ok').onclick = async () => {
   try {
     const b = db.batch();
     b.set(db.collection('demoSlots').doc(slotId(dia, hora)), { ocupado: true, em: new Date().toISOString() });
-    b.set(db.collection('demos').doc(id), { nome: nome.slice(0, 80), whatsapp: wa, empresa: $('#em').value.trim().slice(0, 120), funcionarios: $('#fu').value.replace(/\D/g, '').slice(0, 6), obs: $('#ob').value.trim().slice(0, 300), quando: q.toISOString(), slot: slotId(dia, hora), status: 'agendada', criadoEm: new Date().toISOString(), indicadoPor: window._ind || '' });
+    b.set(db.collection('demos').doc(id), { nome: nome.slice(0, 80), whatsapp: wa, empresa: $('#em').value.trim().slice(0, 120), funcionarios: $('#fu').value.replace(/\D/g, '').slice(0, 6), obs: $('#ob').value.trim().slice(0, 300), quando: q.toISOString(), slot: slotId(dia, hora), status: 'agendada', criadoEm: new Date().toISOString(), indicadoPor: window._ind || '', ...(/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test($('#ml').value.trim()) ? { email: $('#ml').value.trim().toLowerCase().slice(0, 120) } : {}) });
     const qd = q.toLocaleDateString('pt-BR', { ...TZ, weekday: 'short', day: '2-digit', month: '2-digit' }) + ' às ' + q.toLocaleTimeString('pt-BR', { ...TZ, hour: '2-digit', minute: '2-digit' });
     b.set(db.collection('leads').doc('demo_' + id), { nome: nome.slice(0, 80), whatsapp: wa, empresa: $('#em').value.trim().slice(0, 120), funcionarios: $('#fu').value.replace(/\D/g, '').slice(0, 6), resumo: `Agendou demonstração para ${qd}.${$('#ob').value.trim() ? ' Disse: ' + $('#ob').value.trim().slice(0, 300) : ''}`.slice(0, 490), plano: 'indefinido', status: 'novo', origem: 'demonstração', em: new Date().toISOString(), conversa: [], ...(window._ind ? { indicadoPor: window._ind } : {}) });
     await b.commit();

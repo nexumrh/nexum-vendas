@@ -71,6 +71,8 @@ $('#ok').onclick = async () => {
     const b = db.batch();
     b.set(db.collection('demoSlots').doc(slotId(dia, hora)), { ocupado: true, em: new Date().toISOString() });
     b.set(db.collection('demos').doc(id), { nome: nome.slice(0, 80), whatsapp: wa, empresa: $('#em').value.trim().slice(0, 120), funcionarios: $('#fu').value.replace(/\D/g, '').slice(0, 6), obs: $('#ob').value.trim().slice(0, 300), quando: q.toISOString(), slot: slotId(dia, hora), status: 'agendada', criadoEm: new Date().toISOString(), indicadoPor: window._ind || '' });
+    const qd = q.toLocaleDateString('pt-BR', { ...TZ, weekday: 'short', day: '2-digit', month: '2-digit' }) + ' às ' + q.toLocaleTimeString('pt-BR', { ...TZ, hour: '2-digit', minute: '2-digit' });
+    b.set(db.collection('leads').doc('demo_' + id), { nome: nome.slice(0, 80), whatsapp: wa, empresa: $('#em').value.trim().slice(0, 120), funcionarios: $('#fu').value.replace(/\D/g, '').slice(0, 6), resumo: `Agendou demonstração para ${qd}.${$('#ob').value.trim() ? ' Disse: ' + $('#ob').value.trim().slice(0, 300) : ''}`.slice(0, 490), plano: 'indefinido', status: 'novo', origem: 'demonstração', em: new Date().toISOString(), conversa: [], ...(window._ind ? { indicadoPor: window._ind } : {}) });
     await b.commit();
   } catch (e) { $('#ok').disabled = false; return msg('Esse horário acabou de ser ocupado ou a internet falhou. Escolha outro horário e tente de novo.'), pintaHoras(); }
   const fim = new Date(q.getTime() + (CFG.duracao || 30) * 60000), z = d => d.toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');

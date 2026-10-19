@@ -41,7 +41,7 @@ h1{font-size:26px;margin:0 0 6px;line-height:1.2}h2{font-size:17px;margin:0 0 10
 const FIREBASE_CONFIG = { apiKey: 'AIzaSyDdcLJdO2qnmiGsR1EsKFu-uJfs4FRNvA4', authDomain: 'nexum-30044.firebaseapp.com', projectId: 'nexum-30044', storageBucket: 'nexum-30044.firebasestorage.app', messagingSenderId: '988792881104', appId: '1:988792881104:web:c0517c2b62b6e9f14603d5' };
 const $ = s => document.querySelector(s), esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
 const TZ = { timeZone: 'America/Sao_Paulo' };
-let db = null, CFG = { dias: [1, 2, 3, 4, 5], horas: ['10:00', '14:00', '16:00'], duracao: 30, meet: '' }, dia = null, hora = null;
+let db = null, CFG = { dias: [1, 2, 3, 4, 5], horas: ['10:00', '14:00', '16:00'], duracao: 30, meet: 'https://meet.google.com/ovn-pahy-hcx' }, dia = null, hora = null;
 const slotId = (d, h) => `${d}T${h.replace(':', '')}`;
 const quando = (d, h) => new Date(`${d}T${h}:00-03:00`);
 function proximosDias() { const out = []; const hoje = new Date(new Date().toLocaleString('en-US', TZ)); for (let i = 0; i < 21 && out.length < 10; i++) { const d = new Date(hoje.getFullYear(), hoje.getMonth(), hoje.getDate() + i); if (CFG.dias.includes(d.getDay())) out.push(d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0')); } return out; }
@@ -57,7 +57,7 @@ function pintaDias() {
   const p = document.querySelector('.dia'); if (p) p.click();
 }
 async function init() {
-  try { firebase.initializeApp(FIREBASE_CONFIG); db = firebase.firestore(); const c = await db.doc('plataforma/demoAgenda').get(); if (c.exists) CFG = Object.assign(CFG, c.data()); } catch (e) { }
+  try { firebase.initializeApp(FIREBASE_CONFIG); db = firebase.firestore(); const sm = await db.doc('plataforma/salaMeet').get(); if (sm.exists && sm.data().meet) CFG.meet = sm.data().meet; const c = await db.doc('plataforma/demoAgenda').get(); if (c.exists) { const x = c.data(); CFG = Object.assign(CFG, x, { meet: x.meet || CFG.meet }); } } catch (e) { }
   $('#dur').textContent = CFG.duracao || 30;
   try { const ind = JSON.parse(localStorage.getItem('nx-ind') || 'null'); window._ind = ind && Date.now() - ind.em < 90 * 864e5 ? ind.t : ''; } catch (e) { window._ind = ''; }
   pintaDias();

@@ -809,5 +809,119 @@ dialog.std{border:0;padding:0;border-radius:22px;width:min(680px,calc(100% - 24p
     document.getElementById('cc-an').textContent = br(eco * 12); }
   ids.concat([]).forEach(function (i) { document.getElementById(i).addEventListener('input', calc); }); [f, s, c].forEach(function (x) { x.addEventListener('input', calc); }); calc(); })();
 </script>
+<script>
+/* =====================================================================
+   LOTE 36 (Site): chat ao vivo com a equipe (dentro do assistente) e
+   prova social ao vivo (eventos reais e anônimos dos últimos dias).
+   ===================================================================== */
+(function () {
+  var st = document.createElement('style');
+  st.textContent = '.sv-p header{gap:8px}.sv-p header>div{min-width:0;flex:1}.sv-p header .cv-pes{flex:0 0 auto;border:0;background:rgba(255,255,255,.16);color:inherit;font-weight:600;font-size:12.5px;line-height:1;font-family:inherit;padding:7px 10px;border-radius:999px;cursor:pointer;margin-right:6px;white-space:nowrap}.sv-p header .cv-pes:hover{background:rgba(255,255,255,.26)}'
+    + '.cv-dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:#9AA4B8;margin-right:6px;vertical-align:1px}.cv-dot.on{background:#22C55E;box-shadow:0 0 0 3px rgba(34,197,94,.25)}'
+    + '.sv-m.e{background:#fff;border:1px solid var(--line);align-self:flex-start;color:var(--ink)}.sv-m.e small{display:block;font-size:11.5px;font-weight:700;color:var(--blue);margin-bottom:2px}'
+    + '.sv-m.s{align-self:center;background:transparent;color:#6B7280;font-size:12.5px;padding:2px 8px;text-align:center}'
+    + '.cv-f{display:grid;gap:8px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:12px}.cv-f b{font-size:14.5px}.cv-f input,.cv-f textarea{font:inherit;font-size:14.5px;padding:10px 12px;border:1px solid var(--line);border-radius:10px;width:100%;box-sizing:border-box}.cv-f label{font-size:12.5px;color:#4B5563;display:flex;gap:6px;align-items:flex-start}'
+    + '.cv-f button{border:0;border-radius:10px;padding:11px;background:var(--blue);color:#fff;font-weight:700;font-size:14.5px;line-height:1;font-family:inherit;cursor:pointer}.cv-f .cv-sec{background:transparent;color:var(--blue);padding:6px}'
+    + '.cv-bdg{position:absolute;top:-6px;right:-4px;min-width:20px;height:20px;border-radius:10px;background:#EF4444;color:#fff;font-weight:700;font-size:12px;line-height:20px;font-family:inherit;text-align:center;padding:0 5px}.sv-b{position:fixed}'
+    + '.ps36{position:fixed;left:18px;bottom:18px;z-index:69;max-width:min(340px,calc(100vw - 110px));background:#fff;border:1px solid var(--line);border-radius:14px;box-shadow:0 14px 34px rgba(6,26,75,.18);padding:11px 34px 11px 14px;font-size:13.5px;line-height:1.45;color:var(--ink);opacity:0;transform:translateY(12px);transition:opacity .35s,transform .35s;pointer-events:none}'
+    + '.ps36.on{opacity:1;transform:none;pointer-events:auto}.ps36 b{display:block}.ps36 small{color:#6B7280}.ps36 button{position:absolute;top:6px;right:6px;border:0;background:none;font-size:18px;line-height:1;color:#9AA4B8;cursor:pointer;padding:4px}'
+    + '@media(max-width:760px){.ps36{bottom:84px;left:12px}body:has(.sv-p:not([hidden])) .ps36{display:none}}@media(prefers-reduced-motion:reduce){.ps36{transition:none}}';
+  document.head.appendChild(st);
+
+  var PUB = 'https://firestore.googleapis.com/v1/projects/nexum-30044/databases/(default)/documents/plataforma/publico?key=AIzaSyDdcLJdO2qnmiGsR1EsKFu-uJfs4FRNvA4';
+  var pubP = null; function publico() { if (!pubP) pubP = fetch(PUB).then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; }); return pubP; }
+  function base() { return publico().then(function (j) { var f = j && j.fields && j.fields.asaasUrl; return f ? String(f.stringValue || '').replace(/\/+$/, '') : ''; }); }
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+  function horario() { var d = new Date(Date.now() + (new Date().getTimezoneOffset() - 180) * 60000), w = d.getDay(), h = d.getHours() + d.getMinutes() / 60; return w >= 1 && w <= 5 ? h >= 9 && h < 18 : w === 6 ? h >= 9 && h < 13 : false; }
+
+  /* ---------------- chat ao vivo ---------------- */
+  var CV = { sess: null, msgs: [], n: 0, vivo: false, online: horario(), timer: null, naoLidas: 0, encerrado: false };
+  try { CV.sess = JSON.parse(localStorage.getItem('nx:chatVivo') || 'null'); } catch (e) { }
+  window.__cv = CV;
+  function api(rota, corpo) { return base().then(function (b) { if (!b) throw new Error('O chat com a equipe não está disponível agora. Chame no WhatsApp.'); return fetch(b + '/api/site/chat/' + rota, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(corpo) }); }).then(function (r) { return r.json().catch(function () { return {}; }).then(function (j) { if (!r.ok) { var e = new Error(j.erro || 'Não foi possível agora.'); e.st = r.status; throw e; } return j; }); }); }
+  function painel() { return document.getElementById('sv-p'); }
+  function aberto() { var p = painel(); return p && !p.hidden; }
+  function cab() {
+    var p = painel(); if (!p) return; var h = p.querySelector('header'), sm = h && h.querySelector('small'), bt = document.getElementById('cv-pes');
+    if (sm) sm.innerHTML = CV.vivo ? '<span class="cv-dot ' + (CV.online ? 'on' : '') + '"></span>' + (CV.encerrado ? 'Atendimento encerrado' : CV.online ? 'Você está falando com a equipe NEXUM' : 'Fora do horário: respondemos aqui e no seu WhatsApp') : 'Responde na hora';
+    var tt = h && h.querySelector('div b'); if (tt) tt.textContent = CV.vivo ? 'Equipe NEXUM' : 'Assistente NEXUM';
+    if (bt) bt.innerHTML = CV.vivo ? '🤖 Assistente' : '<span class="cv-dot ' + (horario() ? 'on' : '') + '"></span>Falar com uma pessoa';
+    var s = p.querySelector('.sv-s'); if (s) s.style.display = CV.vivo ? 'none' : '';
+    var i = document.getElementById('sv-t'); if (i) i.placeholder = CV.vivo ? (CV.encerrado ? 'Atendimento encerrado' : 'Escreva para a equipe') : 'Escreva sua pergunta'; if (i) i.disabled = CV.vivo && CV.encerrado;
+  }
+  function pintar() {
+    var c = document.getElementById('sv-c'); if (!c || !CV.vivo) return;
+    c.innerHTML = CV.msgs.map(function (m) { return m.de === 'cliente' ? '<div class="sv-m u">' + esc(m.t) + '</div>' : m.de === 'equipe' ? '<div class="sv-m e"><small>' + esc(m.por || 'Equipe NEXUM') + '</small>' + esc(m.t).replace(/\n/g, '<br>') + '</div>' : '<div class="sv-m s">' + esc(m.t) + '</div>'; }).join('')
+      + (!CV.msgs.some(function (m) { return m.de === 'equipe'; }) && !CV.encerrado ? '<div class="sv-m s">' + (CV.online ? 'Já avisamos a equipe. Em instantes alguém responde aqui.' : 'Estamos fora do horário (seg a sex, 9h às 18h; sáb, 9h às 13h). Deixe sua mensagem: respondemos aqui e no seu WhatsApp.') + '</div>' : '')
+      + (CV.encerrado ? '<div class="sv-m s">A equipe encerrou este atendimento. <a href="#" id="cv-vt">Voltar ao assistente</a></div>' : '');
+    c.scrollTop = c.scrollHeight; var vt = document.getElementById('cv-vt'); if (vt) vt.onclick = function (e) { e.preventDefault(); sair(); };
+  }
+  function badge() { var b = document.getElementById('sv-b'); if (!b) return; var x = b.querySelector('.cv-bdg'); if (CV.naoLidas && !aberto()) { if (!x) { b.insertAdjacentHTML('beforeend', '<span class="cv-bdg"></span>'); x = b.querySelector('.cv-bdg'); } x.textContent = CV.naoLidas; } else if (x) x.remove(); }
+  function ler() {
+    if (!CV.sess) return Promise.resolve();
+    return api('ler', { sid: CV.sess.sid, tk: CV.sess.tk, n: CV.n }).then(function (j) {
+      var novas = j.msgs || []; CV.n = j.n; CV.online = j.online; CV.encerrado = !!j.encerrado; CV.msgs = CV.msgs.concat(novas);
+      var eq = novas.filter(function (m) { return m.de === 'equipe'; }).length; if (eq && !aberto()) CV.naoLidas += eq; if (eq && aberto()) try { navigator.vibrate && navigator.vibrate(40); } catch (e) { }
+      if (CV.vivo) { cab(); if (novas.length) pintar(); } badge();
+    }).catch(function (e) { if (e.st === 404) { CV.sess = null; try { localStorage.removeItem('nx:chatVivo'); } catch (x) { } } });
+  }
+  function agendar() { clearTimeout(CV.timer); if (!CV.sess) return; CV.timer = setTimeout(function () { (document.hidden ? Promise.resolve() : ler()).then(agendar); }, aberto() && CV.vivo ? 3000 : 20000); }
+  function entrar() { CV.vivo = true; CV.msgs = []; CV.n = 0; cab(); pintar(); ler().then(function () { pintar(); agendar(); }); }
+  function sair() { CV.vivo = false; CV.auto = false; CV.sess = null; CV.encerrado = false; clearTimeout(CV.timer); try { localStorage.removeItem('nx:chatVivo'); } catch (e) { } cab(); var c = document.getElementById('sv-c'); if (c) c.innerHTML = ''; (window.__sv && window.__sv.msgs || []).length = 0; var bx = document.getElementById('sv-x'); if (bx) { bx.click(); bx.click(); } }
+  function formulario() {
+    var c = document.getElementById('sv-c'); if (!c || document.getElementById('cv-f')) return;
+    var on = horario(), sv = window.__sv || { msgs: [] }, ult = (sv.msgs || []).filter(function (m) { return m.role === 'user'; }).slice(-1)[0];
+    c.insertAdjacentHTML('beforeend', '<form class="cv-f" id="cv-f"><b>' + (on ? 'Fale agora com a equipe NEXUM' : 'Deixe sua mensagem para a equipe') + '</b><span style="font-size:13px;color:#4B5563">' + (on ? 'Uma pessoa do comercial responde aqui mesmo, em poucos minutos.' : 'Estamos fora do horário. Respondemos aqui e no seu WhatsApp assim que voltarmos.') + '</span>'
+      + '<input id="cv-n" placeholder="Seu nome" autocomplete="name" required maxlength="80"><input id="cv-w" placeholder="WhatsApp com DDD" inputmode="tel" autocomplete="tel" required><textarea id="cv-m" rows="2" maxlength="1000" placeholder="Como podemos ajudar?">' + esc(ult ? ult.content : '') + '</textarea>'
+      + '<label><input type="checkbox" id="cv-ok" checked> Autorizo a NEXUM a falar comigo sobre o sistema por aqui e pelo WhatsApp.</label><button type="submit">' + (on ? 'Chamar a equipe' : 'Enviar mensagem') + '</button><button type="button" class="cv-sec" id="cv-cx">Agora não</button></form>');
+    c.scrollTop = c.scrollHeight;
+    document.getElementById('cv-cx').onclick = function () { var f = document.getElementById('cv-f'); if (f) f.remove(); };
+    document.getElementById('cv-f').onsubmit = function (e) {
+      e.preventDefault(); var g = function (id) { return document.getElementById(id).value.trim(); }, nome = g('cv-n'), wa = g('cv-w').replace(/\D/g, ''), b = document.querySelector('#cv-f button[type=submit]');
+      if (nome.length < 2 || wa.length < 10) return alert('Informe seu nome e um WhatsApp com DDD.'); if (!document.getElementById('cv-ok').checked) return alert('Autorize o contato para continuar.');
+      var sid = (crypto.getRandomValues ? Array.from(crypto.getRandomValues(new Uint8Array(16)), function (x) { return x.toString(16).padStart(2, '0'); }).join('') : String(Math.random()).slice(2) + Date.now());
+      b.disabled = true; b.textContent = 'Chamando…';
+      api('abrir', { sid: sid, nome: nome, whatsapp: wa, texto: g('cv-m'), pagina: location.pathname, conversa: (sv.msgs || []).slice(-20).map(function (m) { return { r: m.role === 'user' ? 'u' : 'b', t: String(m.content).slice(0, 900) }; }) })
+        .then(function (j) { CV.sess = { sid: sid, tk: j.tk }; CV.online = j.online; try { localStorage.setItem('nx:chatVivo', JSON.stringify(CV.sess)); } catch (x) { } entrar(); })
+        .catch(function (er) { b.disabled = false; b.textContent = 'Tentar de novo'; alert(er.message); });
+    };
+  }
+  function montar() {
+    var p = painel(); if (!p || document.getElementById('cv-pes')) return;
+    var h = p.querySelector('header'), x = document.getElementById('sv-x'); if (!h || !x) return;
+    x.insertAdjacentHTML('beforebegin', '<button type="button" class="cv-pes" id="cv-pes"></button>');
+    document.getElementById('cv-pes').onclick = function () { if (CV.vivo) { CV.vivo = false; CV.auto = false; cab(); var c = document.getElementById('sv-c'); if (c) c.innerHTML = ''; (window.__sv && window.__sv.msgs || []).length = 0; var bx = document.getElementById('sv-x'); bx.click(); bx.click(); return; } if (CV.sess) { CV.auto = true; return entrar(); } formulario(); };
+    var f = document.getElementById('sv-in'), orig = f.onsubmit;
+    f.onsubmit = function (e) { if (!CV.vivo) return orig.call(this, e); e.preventDefault(); var i = document.getElementById('sv-t'), t = i.value.trim(); if (!t || CV.encerrado) return; i.value = '';
+      CV.msgs.push({ de: 'cliente', t: t, em: new Date().toISOString() }); CV.n++; pintar();
+      api('enviar', { sid: CV.sess.sid, tk: CV.sess.tk, texto: t }).catch(function (er) { CV.msgs.pop(); CV.n--; pintar(); i.value = t; alert(er.message); }); };
+    /* "Quero falar com um consultor" passa a chamar a equipe ao vivo */
+    [].forEach.call(p.querySelectorAll('[data-sv]'), function (b) { if (/consultor/i.test(b.dataset.sv)) b.onclick = function () { formulario(); }; });
+    var ob = document.getElementById('sv-b'), ox = document.getElementById('sv-x');
+    [ob, ox].forEach(function (b) { b.addEventListener('click', function () { setTimeout(function () { if (aberto()) { CV.naoLidas = 0; badge(); if (CV.sess && !CV.vivo && CV.auto !== false) entrar(); } cab(); agendar(); }, 30); }); });
+    cab();
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', montar); else montar();
+  if (CV.sess) agendar();
+
+  /* ---------------- prova social ao vivo ---------------- */
+  function ha(iso) { var m = Math.max(1, Math.round((Date.now() - Date.parse(iso)) / 60000)); return m < 60 ? 'há ' + m + ' min' : m < 1440 ? 'há ' + Math.round(m / 60) + ' h' : m < 2880 ? 'ontem' : 'há ' + Math.round(m / 1440) + ' dias'; }
+  try { if (sessionStorage.getItem('nx:ps36') === 'x') return; } catch (e) { }
+  publico().then(function (j) {
+    var v = j && j.fields && j.fields.recentes && j.fields.recentes.arrayValue && j.fields.recentes.arrayValue.values; if (!v) return;
+    var l = v.map(function (x) { var f = (x.mapValue || {}).fields || {}, s = function (k) { return f[k] ? f[k].stringValue || '' : ''; }; return { tipo: s('tipo'), em: s('em'), local: s('local') }; }).filter(function (x) { return x.em && Date.now() - Date.parse(x.em) < 10 * 864e5; });
+    if (l.length < 2) return;
+    var el = document.createElement('div'); el.className = 'ps36'; el.setAttribute('role', 'status'); el.setAttribute('aria-live', 'polite'); document.body.appendChild(el); var k = 0, mostrados = 0, t;
+    var mostra = function () {
+      if (mostrados >= 4) return; var x = l[k++ % l.length]; mostrados++;
+      el.innerHTML = '<b>' + (x.tipo === 'assinou' ? '🎉 Uma empresa ' + esc(x.local || 'nova') + ' assinou o NEXUM' : '🟢 Uma empresa ' + esc(x.local || '') + ' começou o teste grátis') + '</b><small>' + ha(x.em) + '</small><button type="button" aria-label="Fechar">×</button>';
+      el.querySelector('button').onclick = function () { el.classList.remove('on'); clearTimeout(t); try { sessionStorage.setItem('nx:ps36', 'x'); } catch (e) { } };
+      el.classList.add('on'); setTimeout(function () { el.classList.remove('on'); }, 7000); t = setTimeout(mostra, 32000);
+    };
+    t = setTimeout(mostra, 14000);
+  });
+})();
+
+</script>
 </body>
 </html>

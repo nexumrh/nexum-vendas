@@ -235,6 +235,80 @@ dialog.ck::backdrop{background:rgba(4,18,58,.62);backdrop-filter:blur(2px)}
 .cp-n{color:#A7AEC4;font-weight:700;font-size:20px}.cp-p{font-size:14.5px;color:var(--ink2)}.cp td.cp-nx .cp-p{color:var(--blue);font-weight:600}
 @media(max-width:760px){.cp th:first-child{position:sticky;left:0;background:#fff;z-index:1}.cp thead th:first-child{background:#FAFBFD}}.pq a.pq-l{border:1px solid var(--line);border-radius:999px;padding:7px 14px;font-weight:600;font-size:15px;background:#fff;color:var(--blue-d);text-decoration:none}.pq a.pq-l:hover{border-color:var(--blue)}
 </style>
+<!-- AC41 --><script>
+/* =====================================================================
+   LOTE 41: proteção contra robôs (Firebase App Check com reCAPTCHA)
+   - Invisível: ninguém clica em nada. O Google confere em segundo plano se é o nosso site num navegador de verdade.
+   - Cada acesso ao Firebase (login, banco de dados) e ao conector leva um "selo" (token) do App Check.
+   - Com o bloqueio ligado no Firebase, acesso sem selo é recusado: robô com a chave copiada não entra.
+   - Chave vazia = desligado (o sistema funciona como antes).
+   ===================================================================== */
+(function () {
+  var CHAVES = { 'nexum-30044': '__AC_NEXUM__', 'recrutamento-bed5d': '__AC_RS__' }; // chaves do reCAPTCHA de cada projeto (são públicas)
+  Object.keys(CHAVES).forEach(function (p) { if (/^__/.test(CHAVES[p])) CHAVES[p] = ''; });
+  var PADRAO = 'nexum-30044';          // projeto deste sistema (para as chamadas ao conector)
+  var CFG = {
+    'nexum-30044': { apiKey: 'AIzaSyDdcLJdO2qnmiGsR1EsKFu-uJfs4FRNvA4', authDomain: 'nexum-30044.firebaseapp.com', projectId: 'nexum-30044', storageBucket: 'nexum-30044.firebasestorage.app', messagingSenderId: '988792881104', appId: '1:988792881104:web:c0517c2b62b6e9f14603d5' },
+    'recrutamento-bed5d': { apiKey: 'AIzaSyAlR1Iv8em7-K8yn8qHdKvq4n46wKSTiug', authDomain: 'recrutamento-bed5d.firebaseapp.com', projectId: 'recrutamento-bed5d', storageBucket: 'recrutamento-bed5d.firebasestorage.app', messagingSenderId: '587424133454', appId: '1:587424133454:web:d00f550ff7d9bfb2aaae1f' }
+  };
+  window.AC41 = { ligado: false, padrao: PADRAO };
+  if (!(CHAVES['nexum-30044'] || CHAVES['recrutamento-bed5d']) || typeof window.fetch !== 'function') return;
+  var V = '10.12.2', SDK = 'https://www.gstatic.com/firebasejs/' + V + '/', porProj = {}, feitos = {}, pronto = null;
+  var projDaChave = {}; Object.keys(CFG).forEach(function (p) { projDaChave[CFG[p].apiKey] = p; });
+  function ativar(app) {
+    try { if (!app || feitos[app.name]) return; var p = app.options && app.options.projectId; if (!CFG[p] || !CHAVES[p] || typeof app.appCheck !== 'function') return;
+      app.appCheck().activate(new firebase.appCheck.ReCaptchaEnterpriseProvider(CHAVES[p]), true); feitos[app.name] = 1; if (!porProj[p]) porProj[p] = app; window.AC41.ligado = true;
+    } catch (e) { try { console.warn('App Check:', e && e.message); } catch (x) { } }
+  }
+  function ligarSdk() {
+    if (!window.firebase || !firebase.initializeApp || firebase.__ac41) return;
+    firebase.__ac41 = true; var _ini = firebase.initializeApp;
+    firebase.initializeApp = function () { var a = _ini.apply(this, arguments); ativar(a); return a; };
+    try { (firebase.apps || []).forEach(ativar); } catch (e) { }
+  }
+  function carregar(src) { return new Promise(function (ok, er) { var s = document.createElement('script'); s.src = src; s.onload = ok; s.onerror = er; document.head.appendChild(s); }); }
+  /* páginas que já têm o Firebase: liga já (antes de o sistema criar o app). Páginas sem: baixa só o necessário quando precisar */
+  if (window.firebase && firebase.initializeApp && firebase.appCheck) { ligarSdk(); pronto = Promise.resolve(); }
+  function garantirSdk() {
+    if (pronto) return pronto;
+    pronto = (window.firebase && firebase.initializeApp ? Promise.resolve() : carregar(SDK + 'firebase-app-compat.js'))
+      .then(function () { return firebase.appCheck ? null : carregar(SDK + 'firebase-app-check-compat.js'); }).then(ligarSdk);
+    return pronto;
+  }
+  function appDe(p) {
+    if (porProj[p]) return porProj[p];
+    try { var a = (firebase.apps || []).filter(function (x) { return x.name === 'nx-ac41-' + p; })[0] || firebase.initializeApp(CFG[p], 'nx-ac41-' + p); ativar(a); return porProj[p] || a; } catch (e) { return null; }
+  }
+  /* selo do App Check para um projeto (no máximo 3 segundos; sem selo, segue sem) */
+  window.AC41.token = function (p) {
+    p = p || PADRAO; if (!CFG[p] || !CHAVES[p]) return Promise.resolve('');
+    var t = garantirSdk().then(function () { var a = appDe(p); return a && a.appCheck ? a.appCheck().getToken(false).then(function (r) { return (r && r.token) || ''; }) : ''; }).catch(function () { return ''; });
+    return Promise.race([t, new Promise(function (ok) { setTimeout(function () { ok(''); }, 3000); })]);
+  };
+  /* chamadas feitas "à mão" (sem o SDK): banco de dados, login e o conector levam o selo */
+  function alvo(url) {
+    var m = /^https:\/\/firestore\.googleapis\.com\/v1\/projects\/([\w-]+)\//.exec(url); if (m) return CFG[m[1]] ? m[1] : '';
+    if (/^https:\/\/(identitytoolkit|securetoken)\.googleapis\.com\//.test(url)) { var k = /[?&]key=([\w-]+)/.exec(url); return k && projDaChave[k[1]] || ''; }
+    var bases = [window.NX_ASAAS, window.__acWorker]; try { bases.push(PAY.url); } catch (e) { } try { bases.push(PUSH.url); } catch (e) { } try { bases.push(RS_AV.base); } catch (e) { } try { bases.push(localStorage.getItem('nx:asaasUrl')); } catch (e) { }
+    for (var i = 0; i < bases.length; i++) { var w = String(bases[i] || '').replace(/\/+$/, ''); if (/^https:\/\//.test(w) && url.indexOf(w + '/') === 0) return PADRAO; }
+    if (/^https:\/\/[\w.-]+\.workers\.dev\//.test(url)) return PADRAO;
+    return '';
+  }
+  var _f = window.fetch;
+  window.fetch = function (input, init) {
+    try {
+      if (typeof input !== 'string' && !(input instanceof URL)) return _f.apply(this, arguments);
+      var url = String(input), p = alvo(url); if (!p) return _f.apply(this, arguments);
+      var h = new Headers((init && init.headers) || {}); if (h.has('X-Firebase-AppCheck')) return _f.apply(this, arguments);
+      var self = this;
+      var r = window.AC41.token(p).then(function (t) { if (!t) return _f.call(self, input, init); h.set('X-Firebase-AppCheck', t); var i2 = Object.assign({}, init || {}); i2.headers = h; return _f.call(self, input, i2); });
+      if (/\/documents\/plataforma\/publico(\?|$)/.test(url)) r.then(function (res) { try { res.clone().json().then(function (j) { var u = j && j.fields && j.fields.asaasUrl && j.fields.asaasUrl.stringValue; if (u) window.__acWorker = u; }).catch(function () { }); } catch (e) { } });
+      return r;
+    } catch (e) { return _f.apply(this, arguments); }
+  };
+})();
+
+</script><!-- /AC41 -->
 </head>
 <body id="topo">
 <header class="topo"><div class="w"><a class="lg esc" href="#topo" aria-label="NEXUM RH, início"><svg class="lg-n" width="44" height="40" viewBox="20 20 580 520" aria-hidden="true"><defs>
@@ -1004,5 +1078,42 @@ window.ERRO38 = { sistema: 'Site', ctx: () => ({ tela: location.pathname }) };
 (function () { var st = document.createElement('style'); st.textContent = '@media (max-width:760px),(pointer:coarse) and (max-width:1024px){.btn,a.btn,button.btn,.btn.sm,.btn.ghost,.btn.sec{min-height:40px!important;height:auto}.modal-h button,button.x,header button,.tg-abre,button[aria-label^="Fechar"]{min-height:40px;min-width:40px}.tabs button,.chip,button.on,.nav button,.nav-g,.bnav button,.tb,select,select.inp,input.inp:not([type=checkbox]):not([type=radio]){min-height:40px}.menu-btn,.ib,.ferr{min-width:40px;min-height:40px}.f36{display:inline-flex;align-items:center;justify-content:center;min-width:36px;min-height:40px;margin-top:-10px;margin-bottom:-10px}.side .nav button,.side nav button{min-height:40px}}'; document.head.appendChild(st); })();
 
 </script>
+<!-- TS41 --><script>
+/* =====================================================================
+   LOTE 41 (Site): cadastro protegido contra robôs
+   - Caixinha "Sou humano" da Cloudflare (Turnstile) no último passo da compra.
+   - A conta é criada pelo conector, que confere a caixinha, limita cadastros por internet (IP)
+     e recusa e-mail temporário. Se o conector não responder, segue o caminho antigo.
+   ===================================================================== */
+(function () {
+  var TS_CHAVE = '__TS_CHAVE__';
+  var TS = { token: '', id: null, carregando: null };
+  var ligado = TS_CHAVE && !/^__/.test(TS_CHAVE);
+  function api() { if (window.turnstile) return Promise.resolve(); if (TS.carregando) return TS.carregando; TS.carregando = new Promise(function (ok, er) { var s = document.createElement('script'); s.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit'; s.async = true; s.onload = ok; s.onerror = er; document.head.appendChild(s); }); return TS.carregando; }
+  function caixa() {
+    if (!ligado || CK.passo !== 4) return; var d = document.getElementById('ck'); if (!d) return; var f = d.querySelector('.erro'); if (!f) return;
+    var c = document.getElementById('ts41'); if (c && c.isConnected && c.childElementCount) return;
+    if (!c) { c = document.createElement('div'); c.id = 'ts41'; c.style.cssText = 'display:flex;justify-content:center;margin:10px 0 0;min-height:0'; }
+    var foot = f.parentElement; foot.parentElement.insertBefore(c, foot);
+    TS.token = ''; api().then(function () { try { if (TS.id != null) { try { turnstile.remove(TS.id); } catch (e) { } } TS.id = turnstile.render(c, { sitekey: TS_CHAVE, language: 'pt-br', appearance: 'interaction-only', callback: function (t) { TS.token = t; }, 'expired-callback': function () { TS.token = ''; }, 'error-callback': function () { TS.token = ''; } }); } catch (e) { } }).catch(function () { });
+  }
+  var _des = desenhar; desenhar = function () { var r = _des.apply(this, arguments); try { caixa(); } catch (e) { } return r; };
+  var _val = valida; valida = function () { var ok = _val.apply(this, arguments); if (ok && ligado && CK.passo === 4 && !TS.token && window.turnstile) return erro('Aguarde a verificação de segurança terminar (alguns segundos) e toque de novo.'); return ok; };
+  var _cria = criarAcessoRH;
+  criarAcessoRH = async function () {
+    var w = window.NX_ASAAS; if (!w) return _cria.apply(this, arguments);
+    var v = CK.d;
+    try {
+      var r = await fetch(w + '/api/site/criar-acesso', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ turnstile: TS.token || '', email: v.mail.toLowerCase(), senha: CK.senha, nome: v.nome, doc: v.doc, telefone: so(v.wa), cidade: v.cid, responsavel: v.resp, plano: CK.plano, pedido: CK.num, revenda: CK.rev || '', indicadoPor: (typeof INDIC === 'function' && INDIC()) || '', contrato: typeof CONTRATO_VERSAO !== 'undefined' ? CONTRATO_VERSAO : '' }) });
+      if (r.status === 404 || r.status >= 500) return _cria.apply(this, arguments); // conector ainda sem esta função ou fora do ar
+      var j = await r.json().catch(function () { return {}; });
+      try { if (TS.id != null && window.turnstile) turnstile.reset(TS.id); TS.token = ''; } catch (e) { }
+      if (r.ok && j.tid) return { tid: j.tid }; if (j.existe) return { existe: true };
+      return { erro: j.erro || ('falha ' + r.status) };
+    } catch (e) { return _cria.apply(this, arguments); }
+  };
+})();
+
+</script><!-- /TS41 -->
 </body>
 </html>

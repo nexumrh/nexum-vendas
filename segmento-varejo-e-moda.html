@@ -13,7 +13,81 @@ h1,h2,h3{font-family:var(--fd);letter-spacing:-.02em;line-height:1.12}h1{font-si
 .lista{columns:2;gap:40px;padding:0;list-style:none}.lista li{break-inside:avoid;padding:10px 0 10px 30px;position:relative;border-bottom:1px solid var(--line)}.lista li::before{content:"✓";position:absolute;left:0;color:var(--ok);font-weight:800}
 .faq details{border-bottom:1px solid var(--line);padding:16px 0}.faq summary{font-weight:700;cursor:pointer;font-size:18px}.faq p{color:var(--ink2);margin:10px 0 0}
 .fim{background:var(--navy);color:#fff;text-align:center;padding:80px 0}.fim p{color:#C8D7FF}.fim .acoes{justify-content:center}.rod{padding:28px 0;color:var(--ink3);font-size:14px}.rod .w{display:flex;gap:18px;flex-wrap:wrap}
-@media(max-width:820px){.g3{grid-template-columns:1fr}.lista{columns:1}.hero{padding:60px 0 50px}.topo .esc{display:none}}</style><script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Dá para contratar só para o Natal?", "acceptedAnswer": {"@type": "Answer", "text": "Sim. Use o contrato de experiência ou por prazo determinado: o sistema avisa antes do fim do prazo e calcula a rescisão."}}, {"@type": "Question", "name": "O DSR sobre as comissões é calculado?", "acceptedAnswer": {"@type": "Answer", "text": "Sim. As vendas lançadas geram a comissão e o DSR sobre ela entra sozinho no holerite."}}, {"@type": "Question", "name": "Posso vender roupa ao funcionário com desconto em folha?", "acceptedAnswer": {"@type": "Answer", "text": "Sim, com autorização assinada pelo funcionário (CLT, art. 462) e dentro do limite que você definir."}}]}</script></head><body><header class="topo"><div class="w"><a class="lg" href="./" aria-label="NEXUM RH"><svg width="30" height="27" viewBox="20 20 580 520" aria-hidden="true"><path d="M30 528V196c0-30 18-48 46-50L226 260v136z" fill="#1557E0"/><path d="M404 124 578 30v330H404z" fill="#0E43BF"/><path d="M36 168c8-32 42-56 78-82 26-19 50-44 74-54 22-9 44-4 60 12l316 290c16 15 16 32 2 46l-96 90c-16 15-38 15-54 0L104 166c-18-16-48-20-68 2z" fill="#2170EE"/></svg>NEXUM<i></i>RH</a><span class="sp"></span><a class="esc" href="./#planos" style="font-weight:600;color:var(--ink);text-decoration:none">Planos</a><a class="esc" href="blog.html" style="font-weight:600;color:var(--ink);text-decoration:none">Guia trabalhista</a><a class="btn" href="https://rh.nexumdp.com.br/#criar">Testar grátis</a></div></header>
+@media(max-width:820px){.g3{grid-template-columns:1fr}.lista{columns:1}.hero{padding:60px 0 50px}.topo .esc{display:none}}</style><script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Dá para contratar só para o Natal?", "acceptedAnswer": {"@type": "Answer", "text": "Sim. Use o contrato de experiência ou por prazo determinado: o sistema avisa antes do fim do prazo e calcula a rescisão."}}, {"@type": "Question", "name": "O DSR sobre as comissões é calculado?", "acceptedAnswer": {"@type": "Answer", "text": "Sim. As vendas lançadas geram a comissão e o DSR sobre ela entra sozinho no holerite."}}, {"@type": "Question", "name": "Posso vender roupa ao funcionário com desconto em folha?", "acceptedAnswer": {"@type": "Answer", "text": "Sim, com autorização assinada pelo funcionário (CLT, art. 462) e dentro do limite que você definir."}}]}</script><!-- AC41 --><script>
+/* =====================================================================
+   LOTE 41: proteção contra robôs (Firebase App Check com reCAPTCHA)
+   - Invisível: ninguém clica em nada. O Google confere em segundo plano se é o nosso site num navegador de verdade.
+   - Cada acesso ao Firebase (login, banco de dados) e ao conector leva um "selo" (token) do App Check.
+   - Com o bloqueio ligado no Firebase, acesso sem selo é recusado: robô com a chave copiada não entra.
+   - Chave vazia = desligado (o sistema funciona como antes).
+   ===================================================================== */
+(function () {
+  var CHAVES = { 'nexum-30044': '__AC_NEXUM__', 'recrutamento-bed5d': '__AC_RS__' }; // chaves do reCAPTCHA de cada projeto (são públicas)
+  Object.keys(CHAVES).forEach(function (p) { if (/^__/.test(CHAVES[p])) CHAVES[p] = ''; });
+  var PADRAO = 'nexum-30044';          // projeto deste sistema (para as chamadas ao conector)
+  var CFG = {
+    'nexum-30044': { apiKey: 'AIzaSyDdcLJdO2qnmiGsR1EsKFu-uJfs4FRNvA4', authDomain: 'nexum-30044.firebaseapp.com', projectId: 'nexum-30044', storageBucket: 'nexum-30044.firebasestorage.app', messagingSenderId: '988792881104', appId: '1:988792881104:web:c0517c2b62b6e9f14603d5' },
+    'recrutamento-bed5d': { apiKey: 'AIzaSyAlR1Iv8em7-K8yn8qHdKvq4n46wKSTiug', authDomain: 'recrutamento-bed5d.firebaseapp.com', projectId: 'recrutamento-bed5d', storageBucket: 'recrutamento-bed5d.firebasestorage.app', messagingSenderId: '587424133454', appId: '1:587424133454:web:d00f550ff7d9bfb2aaae1f' }
+  };
+  window.AC41 = { ligado: false, padrao: PADRAO };
+  if (!(CHAVES['nexum-30044'] || CHAVES['recrutamento-bed5d']) || typeof window.fetch !== 'function') return;
+  var V = '10.12.2', SDK = 'https://www.gstatic.com/firebasejs/' + V + '/', porProj = {}, feitos = {}, pronto = null;
+  var projDaChave = {}; Object.keys(CFG).forEach(function (p) { projDaChave[CFG[p].apiKey] = p; });
+  function ativar(app) {
+    try { if (!app || feitos[app.name]) return; var p = app.options && app.options.projectId; if (!CFG[p] || !CHAVES[p] || typeof app.appCheck !== 'function') return;
+      app.appCheck().activate(new firebase.appCheck.ReCaptchaEnterpriseProvider(CHAVES[p]), true); feitos[app.name] = 1; if (!porProj[p]) porProj[p] = app; window.AC41.ligado = true;
+    } catch (e) { try { console.warn('App Check:', e && e.message); } catch (x) { } }
+  }
+  function ligarSdk() {
+    if (!window.firebase || !firebase.initializeApp || firebase.__ac41) return;
+    firebase.__ac41 = true; var _ini = firebase.initializeApp;
+    firebase.initializeApp = function () { var a = _ini.apply(this, arguments); ativar(a); return a; };
+    try { (firebase.apps || []).forEach(ativar); } catch (e) { }
+  }
+  function carregar(src) { return new Promise(function (ok, er) { var s = document.createElement('script'); s.src = src; s.onload = ok; s.onerror = er; document.head.appendChild(s); }); }
+  /* páginas que já têm o Firebase: liga já (antes de o sistema criar o app). Páginas sem: baixa só o necessário quando precisar */
+  if (window.firebase && firebase.initializeApp && firebase.appCheck) { ligarSdk(); pronto = Promise.resolve(); }
+  function garantirSdk() {
+    if (pronto) return pronto;
+    pronto = (window.firebase && firebase.initializeApp ? Promise.resolve() : carregar(SDK + 'firebase-app-compat.js'))
+      .then(function () { return firebase.appCheck ? null : carregar(SDK + 'firebase-app-check-compat.js'); }).then(ligarSdk);
+    return pronto;
+  }
+  function appDe(p) {
+    if (porProj[p]) return porProj[p];
+    try { var a = (firebase.apps || []).filter(function (x) { return x.name === 'nx-ac41-' + p; })[0] || firebase.initializeApp(CFG[p], 'nx-ac41-' + p); ativar(a); return porProj[p] || a; } catch (e) { return null; }
+  }
+  /* selo do App Check para um projeto (no máximo 3 segundos; sem selo, segue sem) */
+  window.AC41.token = function (p) {
+    p = p || PADRAO; if (!CFG[p] || !CHAVES[p]) return Promise.resolve('');
+    var t = garantirSdk().then(function () { var a = appDe(p); return a && a.appCheck ? a.appCheck().getToken(false).then(function (r) { return (r && r.token) || ''; }) : ''; }).catch(function () { return ''; });
+    return Promise.race([t, new Promise(function (ok) { setTimeout(function () { ok(''); }, 3000); })]);
+  };
+  /* chamadas feitas "à mão" (sem o SDK): banco de dados, login e o conector levam o selo */
+  function alvo(url) {
+    var m = /^https:\/\/firestore\.googleapis\.com\/v1\/projects\/([\w-]+)\//.exec(url); if (m) return CFG[m[1]] ? m[1] : '';
+    if (/^https:\/\/(identitytoolkit|securetoken)\.googleapis\.com\//.test(url)) { var k = /[?&]key=([\w-]+)/.exec(url); return k && projDaChave[k[1]] || ''; }
+    var bases = [window.NX_ASAAS, window.__acWorker]; try { bases.push(PAY.url); } catch (e) { } try { bases.push(PUSH.url); } catch (e) { } try { bases.push(RS_AV.base); } catch (e) { } try { bases.push(localStorage.getItem('nx:asaasUrl')); } catch (e) { }
+    for (var i = 0; i < bases.length; i++) { var w = String(bases[i] || '').replace(/\/+$/, ''); if (/^https:\/\//.test(w) && url.indexOf(w + '/') === 0) return PADRAO; }
+    if (/^https:\/\/[\w.-]+\.workers\.dev\//.test(url)) return PADRAO;
+    return '';
+  }
+  var _f = window.fetch;
+  window.fetch = function (input, init) {
+    try {
+      if (typeof input !== 'string' && !(input instanceof URL)) return _f.apply(this, arguments);
+      var url = String(input), p = alvo(url); if (!p) return _f.apply(this, arguments);
+      var h = new Headers((init && init.headers) || {}); if (h.has('X-Firebase-AppCheck')) return _f.apply(this, arguments);
+      var self = this;
+      var r = window.AC41.token(p).then(function (t) { if (!t) return _f.call(self, input, init); h.set('X-Firebase-AppCheck', t); var i2 = Object.assign({}, init || {}); i2.headers = h; return _f.call(self, input, i2); });
+      if (/\/documents\/plataforma\/publico(\?|$)/.test(url)) r.then(function (res) { try { res.clone().json().then(function (j) { var u = j && j.fields && j.fields.asaasUrl && j.fields.asaasUrl.stringValue; if (u) window.__acWorker = u; }).catch(function () { }); } catch (e) { } });
+      return r;
+    } catch (e) { return _f.apply(this, arguments); }
+  };
+})();
+
+</script><!-- /AC41 -->
+</head><body><header class="topo"><div class="w"><a class="lg" href="./" aria-label="NEXUM RH"><svg width="30" height="27" viewBox="20 20 580 520" aria-hidden="true"><path d="M30 528V196c0-30 18-48 46-50L226 260v136z" fill="#1557E0"/><path d="M404 124 578 30v330H404z" fill="#0E43BF"/><path d="M36 168c8-32 42-56 78-82 26-19 50-44 74-54 22-9 44-4 60 12l316 290c16 15 16 32 2 46l-96 90c-16 15-38 15-54 0L104 166c-18-16-48-20-68 2z" fill="#2170EE"/></svg>NEXUM<i></i>RH</a><span class="sp"></span><a class="esc" href="./#planos" style="font-weight:600;color:var(--ink);text-decoration:none">Planos</a><a class="esc" href="blog.html" style="font-weight:600;color:var(--ink);text-decoration:none">Guia trabalhista</a><a class="btn" href="https://rh.nexumdp.com.br/#criar">Testar grátis</a></div></header>
 <main><section class="hero"><div class="w"><span class="tag">NEXUM RH para varejo e moda</span><h1>RH para lojas de roupas, calçados e varejo</h1><p>Vendedores comissionados, metas, temporada de fim de ano e loja no shopping: o NEXUM cuida do ponto, da comissão, da escala e da contratação de quem entra para a temporada.</p><div class="acoes"><a class="btn br" href="https://rh.nexumdp.com.br/#criar">Testar grátis por 14 dias</a><a class="btn ln" href="./#planos" style="background:transparent;color:#fff;border-color:rgba(255,255,255,.4)">Ver planos</a></div></div></section>
 <section class="faixa cz"><div class="w"><h2>O que trava o RH de varejo e moda e como o NEXUM resolve</h2><div class="g3" style="margin-top:28px"><div class="card"><span class="dor">O problema</span><h3>Contratação para a temporada de fim de ano</h3><span class="sol">Com o NEXUM</span><p>Vaga com o nome e a foto da loja, candidatura pelo celular e contrato de experiência ou por prazo determinado com aviso antes do fim do prazo.</p></div><div class="card"><span class="dor">O problema</span><h3>Comissão e metas que geram discussão</h3><span class="sol">Com o NEXUM</span><p>Comissão calculada por vendedor, com o DSR sobre as comissões no holerite e as metas de cada um no portal.</p></div><div class="card"><span class="dor">O problema</span><h3>Funcionário compra na loja e desconta no salário</h3><span class="sol">Com o NEXUM</span><p>Compra com desconto em folha, com autorização assinada no celular e o limite do salário respeitado.</p></div></div></div></section>
 <section class="faixa"><div class="w"><h2>Também incluído</h2><ul class="lista"><li>Escala de domingos e feriados do shopping</li><li>Uniforme entregue com termo assinado</li><li>Metas e comissões por loja</li><li>Holerite e documentos assinados pelo celular</li><li>Seleção terceirizada pela NEXUM: R$ 200 por candidato apresentado</li></ul></div></section>

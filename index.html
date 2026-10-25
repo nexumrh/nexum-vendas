@@ -923,5 +923,51 @@ dialog.std{border:0;padding:0;border-radius:22px;width:min(680px,calc(100% - 24p
 })();
 
 </script>
+<script>
+/* =====================================================================
+   LOTE 37 (Site): chat ao vivo 2.0. Se ninguém da equipe responder em
+   3 minutos (ou fora do horário), o chat mostra os próximos horários
+   livres da agenda e o cliente marca uma conversa com um toque.
+   ===================================================================== */
+(function () {
+  var CV = window.__cv; if (!CV) return;
+  var PUB = 'https://firestore.googleapis.com/v1/projects/nexum-30044/databases/(default)/documents/plataforma/publico?key=AIzaSyDdcLJdO2qnmiGsR1EsKFu-uJfs4FRNvA4', baseP = null;
+  var st = document.createElement('style'); st.textContent = '.ag37{display:grid;gap:8px;background:#fff;border:1px solid var(--line,#E3E8F2);border-radius:14px;padding:12px;align-self:stretch}.ag37 b{font-size:14.5px}.ag37 p{margin:0;font-size:13px;color:#4B5563}.ag37 .hs{display:flex;flex-wrap:wrap;gap:6px}.ag37 .hs button{font:inherit;font-size:13.5px;padding:8px 10px;border-radius:10px;border:1px solid var(--blue,#1F5FE8);background:#fff;color:var(--blue,#1F5FE8);cursor:pointer}.ag37 .hs button:disabled{opacity:.5}.ag37.ok{border-color:#BFE7D2;background:#E8F6EF}.ag37 .x{justify-self:start;background:none;border:0;color:#6B7280;font:inherit;font-size:12.5px;text-decoration:underline;cursor:pointer;padding:0}';
+  document.head.appendChild(st);
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+  function base() { if (!baseP) baseP = fetch(PUB).then(function (r) { return r.ok ? r.json() : null; }).then(function (j) { var f = j && j.fields && j.fields.asaasUrl; return f ? String(f.stringValue || '').replace(/\/+$/, '') : ''; }).catch(function () { return ''; }); return baseP; }
+  function api(rota, corpo) { return base().then(function (b) { if (!b) throw new Error('Agenda indisponível agora.'); return fetch(b + '/api/site/chat/' + rota, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(corpo) }); }).then(function (r) { return r.json().catch(function () { return {}; }).then(function (j) { if (!r.ok) { var e = new Error(j.erro || 'Não foi possível agora.'); e.st = r.status; throw e; } return j; }); }); }
+  var EST = {}; try { EST = JSON.parse(localStorage.getItem('nx:cv37') || '{}') || {}; } catch (e) { }
+  function salva() { try { localStorage.setItem('nx:cv37', JSON.stringify(EST)); } catch (e) { } }
+  var slots = null, carregando = false;
+  function deveOferecer() {
+    if (!CV.vivo || !CV.sess || CV.encerrado) return false;
+    if (EST.sid !== CV.sess.sid) { EST = { sid: CV.sess.sid, em: Date.now() }; salva(); }
+    if (EST.marcado || EST.dispensou) return !!EST.marcado;
+    if ((CV.msgs || []).some(function (m) { return m.de === 'equipe'; })) return false;
+    return !CV.online || Date.now() - EST.em >= 3 * 60000;
+  }
+  function caixa() {
+    if (EST.marcado) return '<div class="ag37 ok" id="ag37"><b>✅ Conversa marcada: ' + esc(EST.marcado) + '</b><p>Horário de Brasília. Confirmamos pelo seu WhatsApp e mandamos o link da sala.</p></div>';
+    var hs = slots && slots.length ? '<div class="hs">' + slots.map(function (s) { return '<button type="button" data-ag37="' + esc(s.slot) + '">' + esc(s.rot) + '</button>'; }).join('') + '</div>' : (slots ? '<p>Não há horários livres nos próximos dias. A equipe responde aqui e no seu WhatsApp.</p>' : '<p>Buscando horários livres…</p>');
+    return '<div class="ag37" id="ag37"><b>' + (CV.online ? 'A equipe está em outro atendimento agora' : 'Estamos fora do horário agora') + '</b><p>Quer marcar uma conversa com um consultor? Escolha um horário:</p>' + hs + '<button type="button" class="x" id="ag37-x">Prefiro esperar a resposta aqui</button></div>';
+  }
+  function pinta() {
+    var c = document.getElementById('sv-c'); if (!c) return; var ja = document.getElementById('ag37');
+    if (!deveOferecer()) { if (ja && !EST.marcado) ja.remove(); return; }
+    if (ja && ja.dataset.v === String(!!EST.marcado) + (slots ? slots.length : '-')) return;
+    if (ja) ja.remove(); c.insertAdjacentHTML('beforeend', caixa()); var n = document.getElementById('ag37'); n.dataset.v = String(!!EST.marcado) + (slots ? slots.length : '-'); c.scrollTop = c.scrollHeight;
+    if (!slots && !carregando && !EST.marcado) { carregando = true; api('horarios', { sid: CV.sess.sid, tk: CV.sess.tk }).then(function (j) { slots = j.slots || []; }).catch(function () { slots = []; }).then(function () { carregando = false; pinta(); }); }
+    var x = document.getElementById('ag37-x'); if (x) x.onclick = function () { EST.dispensou = true; salva(); n.remove(); };
+    [].forEach.call(n.querySelectorAll('[data-ag37]'), function (b) { b.onclick = function () {
+      [].forEach.call(n.querySelectorAll('[data-ag37]'), function (y) { y.disabled = true; }); b.textContent = 'Marcando…';
+      api('agendar', { sid: CV.sess.sid, tk: CV.sess.tk, slot: b.dataset.ag37 }).then(function (j) { EST.marcado = j.rot; salva(); pinta(); })
+        .catch(function (e) { alert(e.message); slots = null; var a = document.getElementById('ag37'); if (a) a.remove(); pinta(); });
+    }; });
+  }
+  setInterval(pinta, 4000);
+})();
+
+</script>
 </body>
 </html>

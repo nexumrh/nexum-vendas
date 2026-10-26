@@ -26,7 +26,7 @@ h1,h2,h3{font-family:var(--fd);letter-spacing:-.02em;line-height:1.12}h1{font-si
    - Chave vazia = desligado (o sistema funciona como antes).
    ===================================================================== */
 (function () {
-  var CHAVES = { 'nexum-30044': '6Lek2AAuAAAAAKGQ5K3vSkn7_Ho8mNcqRsZuDCbN', 'recrutamento-bed5d': '__AC_RS__' }; // chaves do reCAPTCHA de cada projeto (são públicas)
+  var CHAVES = { 'nexum-30044': '__AC_NEXUM__', 'recrutamento-bed5d': '__AC_RS__' }; // chaves do reCAPTCHA de cada projeto (são públicas)
   Object.keys(CHAVES).forEach(function (p) { if (/^__/.test(CHAVES[p])) CHAVES[p] = ''; });
   var PADRAO = 'nexum-30044';          // projeto deste sistema (para as chamadas ao conector)
   var CFG = {

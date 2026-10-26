@@ -17,7 +17,7 @@ a{color:#1A5CFF}.topo{background:#0A1733;color:#fff}.topo .in{max-width:1080px;m
    - Chave vazia = desligado (o sistema funciona como antes).
    ===================================================================== */
 (function () {
-  var CHAVES = { 'nexum-30044': '__AC_NEXUM__', 'recrutamento-bed5d': '__AC_RS__' }; // chaves do reCAPTCHA de cada projeto (são públicas)
+  var CHAVES = { 'nexum-30044': '6Lek2AAuAAAAAKGQ5K3vSkn7_Ho8mNcqRsZuDCbN', 'recrutamento-bed5d': '__AC_RS__' }; // chaves do reCAPTCHA de cada projeto (são públicas)
   Object.keys(CHAVES).forEach(function (p) { if (/^__/.test(CHAVES[p])) CHAVES[p] = ''; });
   var PADRAO = 'nexum-30044';          // projeto deste sistema (para as chamadas ao conector)
   var CFG = {
@@ -74,8 +74,8 @@ a{color:#1A5CFF}.topo{background:#0A1733;color:#fff}.topo .in{max-width:1080px;m
       var url = String(input), p = alvo(url); if (!p) return _f.apply(this, arguments);
       var h = new Headers((init && init.headers) || {}); if (h.has('X-Firebase-AppCheck')) return _f.apply(this, arguments);
       var self = this;
-      var r = window.AC41.token(p).then(function (t) { if (!t) return _f.call(self, input, init); h.set('X-Firebase-AppCheck', t); var i2 = Object.assign({}, init || {}); i2.headers = h; return _f.call(self, input, i2); });
-      if (/\/documents\/plataforma\/publico(\?|$)/.test(url)) r.then(function (res) { try { res.clone().json().then(function (j) { var u = j && j.fields && j.fields.asaasUrl && j.fields.asaasUrl.stringValue; if (u) window.__acWorker = u; }).catch(function () { }); } catch (e) { } });
+      var r = window.AC41.token(p).then(function (t) { if (!t) return _f.call(self, input, init); h.set('X-Firebase-AppCheck', t); var i2 = Object.assign({}, init || {}); i2.headers = h; return _f.call(self, input, i2).catch(function () { return _f.call(self, input, init); }); });
+      if (/\/documents\/plataforma\/publico(\?|$)/.test(url)) r.then(function (res) { try { res.clone().json().then(function (j) { var u = j && j.fields && j.fields.asaasUrl && j.fields.asaasUrl.stringValue; if (u) window.__acWorker = u; }).catch(function () { }); } catch (e) { } }, function () { });
       return r;
     } catch (e) { return _f.apply(this, arguments); }
   };
